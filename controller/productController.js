@@ -1,4 +1,5 @@
 const products = require("../model/productModel");
+const url = require("url");
 
 //to show product list
 
@@ -28,7 +29,7 @@ const index = (req, res) => {
 // };
 
 //to show single products using id by get method
-const search = (req, res, next) => {
+const searchProduct = (req, res, next) => {
   products
     .findById(req.params.id)
     .then((response) => {
@@ -112,4 +113,17 @@ const remove = (req, res) => {
     });
 };
 
-module.exports = { index, add, search, update, remove };
+const search = (req, res) => {
+  const { B_Name, P_Name, P_Catagory, P_Sold, P_Quantity } = req.query;
+  console.log(req.query);
+  products
+    .find(req.query)
+    .then((response) => {
+      res.json({ response });
+    })
+    .catch((error) => {
+      res.json({ msg: "An Error occured: " + error });
+    });
+};
+
+module.exports = { index, add, searchProduct, update, remove, search };
