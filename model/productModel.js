@@ -3,15 +3,15 @@ const mongoose = require("mongoose");
 const productSchema = new mongoose.Schema({
   B_Name: {
     type: String,
-    required: true,
+    // required: true,
   },
   P_Name: {
     type: String,
-    required: true,
+    // required: true,
   },
   P_Catagory: {
     type: String,
-    required: true,
+    // required: true,
   },
   P_Price: {
     type: Number,
@@ -21,7 +21,7 @@ const productSchema = new mongoose.Schema({
     type: Number,
     // required: true,
   },
-  P_sold: {
+  P_Sold: {
     type: Number,
     // required: true,
   },

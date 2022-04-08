@@ -9,7 +9,7 @@ app.use(
   })
 );
 
-app.use("/products", require("./controller/productController"));
-
 PORT = process.env.PORT || 8080;
 app.listen(PORT, () => console.log(`server running at : ${PORT}`));
+
+app.use("/products", require("./routes/productRoutes"));
