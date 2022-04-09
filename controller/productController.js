@@ -1,9 +1,7 @@
 const products = require("../model/productModel");
-const url = require("url");
-
 //to show product list
 
-const index = (req, res) => {
+const productList = (req, res) => {
   products
     .find()
     .then((response) => {
@@ -14,22 +12,8 @@ const index = (req, res) => {
     });
 };
 
-// to show product by id
-// using post method
-// const search2 = (req, res) => {
-//   let productId = req.body.id;
-//   products
-//     .findById(productId)
-//     .then((response) => {
-//       res.json({ response });
-//     })
-//     .catch((error) => {
-//       res.json({ msg: "An Error occured " + error });
-//     });
-// };
-
 //to show single products using id by get method
-const searchProduct = (req, res, next) => {
+const ProductById = (req, res, next) => {
   products
     .findById(req.params.id)
     .then((response) => {
@@ -42,15 +26,14 @@ const searchProduct = (req, res, next) => {
 
 //to add product details
 
-const add = (req, res) => {
+const productAdd = (req, res) => {
   try {
     const newProduct = new products({
-      B_Name: req.body.B_Name,
-      P_Name: req.body.P_Name,
-      P_Catagory: req.body.P_Catagory,
-      P_Price: req.body.P_Price,
-      P_Quantity: req.body.P_Quantity,
-      P_Sold: req.body.P_Sold,
+      productName: req.body.productName,
+      productCatagory: req.body.productCatagory,
+      productPrice: req.body.productPrice,
+      productQuantity: req.body.productQuantity,
+      productSold: req.body.productSold,
     });
 
     newProduct.save();
@@ -62,15 +45,14 @@ const add = (req, res) => {
 
 //to update product details
 
-const update = (req, res) => {
+const productUpdate = (req, res) => {
   let productId1 = req.body.id;
   let updatedData = {
-    B_Name: req.body.B_Name,
-    P_Name: req.body.P_Name,
-    P_Catagory: req.body.P_Catagory,
-    P_Price: req.body.P_Price,
-    P_Quantity: req.body.P_Quantity,
-    P_Sold: req.body.P_Sold,
+    productName: req.body.productName,
+    productCatagory: req.body.productCatagory,
+    productPrice: req.body.productPrice,
+    productQuantity: req.body.productQuantity,
+    productSold: req.body.productSold,
   };
   products
     .findByIdAndUpdate(productId1, { $set: updatedData })
@@ -82,26 +64,7 @@ const update = (req, res) => {
     });
 };
 
-// router.put("/:id", (req, res) => {
-//   let updatedData = {
-//     B_Name: req.body.B_Name,
-//     P_Name: req.body.P_Name,
-//     P_Catagory: req.body.P_Catagory,
-//     P_Price: req.body.P_Price,
-//     P_Quantity: req.body.P_Quantity,
-//     P_Sold: req.body.P_Sold,
-//   };
-//   products
-//     .findByIdAndUpdate(req.params.id, { $set: updatedData })
-//     .then((products) => {
-//       res.json({ msg: `Product updated sucessfully.`, products });
-//     })
-//     .catch((err) => {
-//       res.json({ msg: "An error occured: " + err });
-//     });
-// });
-
-const remove = (req, res) => {
+const productRemove = (req, res) => {
   let productId = req.params.id;
   products
     .findByIdAndRemove(productId)
@@ -113,8 +76,9 @@ const remove = (req, res) => {
     });
 };
 
-const search = (req, res) => {
-  const { B_Name, P_Name, P_Catagory, P_Sold, P_Quantity } = req.query;
+const productSearch = (req, res) => {
+  const { productName, productCatagory, productSold, productQuantity } =
+    req.query;
   console.log(req.query);
   products
     .find(req.query)
@@ -126,4 +90,11 @@ const search = (req, res) => {
     });
 };
 
-module.exports = { index, add, searchProduct, update, remove, search };
+module.exports = {
+  productList,
+  ProductById,
+  productRemove,
+  productUpdate,
+  productAdd,
+  productSearch,
+};
