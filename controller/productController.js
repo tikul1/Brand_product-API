@@ -33,7 +33,7 @@ const productAdd = (req, res) => {
       productCatagory: req.body.productCatagory,
       productPrice: req.body.productPrice,
       productQuantity: req.body.productQuantity,
-      productSold: req.body.productSold,
+      brandId: req.body.brandId,
     });
 
     newProduct.save();
@@ -53,6 +53,7 @@ const productUpdate = (req, res) => {
     productPrice: req.body.productPrice,
     productQuantity: req.body.productQuantity,
     productSold: req.body.productSold,
+    brandId: req.body.brandId,
   };
   products
     .findByIdAndUpdate(productId1, { $set: updatedData })
