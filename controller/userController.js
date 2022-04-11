@@ -40,7 +40,7 @@ const userUpdate = async (req, res) => {
   try {
     const userId = await users.findById(req.body.id);
     Object.assign(userId, req.body);
-    userId.save();
+    await userId.save();
     res.json({ msg: `Product updated sucessfully.` });
   } catch (err) {
     res.json({ msg: "An error occured" + err });

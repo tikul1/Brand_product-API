@@ -16,7 +16,7 @@ const brandAdd = async (req, res) => {
       brandName: req.body.brandName,
       brandType: req.body.brandType,
     });
-    newBrand.save();
+    await newBrand.save();
     res.json(newBrand);
   } catch (error) {
     res.json("Error Occured");
@@ -27,7 +27,7 @@ const brandUpdate = async (req, res) => {
   try {
     const brandname = await brands.findById(req.body.id);
     Object.assign(brandname, req.body);
-    brandname.save();
+    await brandname.save();
     res.json({ msg: `Product updated sucessfully.` });
   } catch (err) {
     res.json({ msg: "An error occured" + err });

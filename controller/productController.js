@@ -36,7 +36,7 @@ const productAdd = async (req, res) => {
       brandId: req.body.brandId,
     });
 
-    newProduct.save();
+    await newProduct.save();
     res.json(newProduct);
   } catch (error) {
     res.json("Error Occured");
@@ -49,7 +49,7 @@ const productUpdate = async (req, res) => {
   try {
     const productId = await products.findById(req.body.id);
     Object.assign(productId, req.body);
-    productId.save();
+    await productId.save();
     res.json({ msg: `Product updated sucessfully.` });
   } catch (err) {
     res.json({ msg: "An error occured" + err });
