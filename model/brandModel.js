@@ -1,9 +1,11 @@
 const mongoose = require("mongoose");
 
-const brandSchema = new mongoose.Schema({
-  brandName: { type: String, trim: true },
-  brandType: String,
-  date: { type: Date, default: Date.now },
-});
+const brandSchema = new mongoose.Schema(
+  {
+    brandName: { type: String, trim: true },
+    brandType: String,
+  },
+  { timestamps: true }
+);
 
-module.exports = mongoose.model("Brand", brandSchema, "productapi");
+module.exports = mongoose.model("Brand", brandSchema);

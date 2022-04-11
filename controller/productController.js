@@ -1,34 +1,34 @@
 const products = require("../model/productModel");
 //to show product list
 
-const productList = (req, res) => {
-  products
-    .find()
-    .then((response) => {
-      res.json({ response });
-    })
-    .catch((error) => {
-      res.json({ msg: "An Error occured" + error });
-    });
+const productList = async (req, res) => {
+  try {
+    const list = await products
+      .find()
+      .populate("brandId", "_id brandName brandType");
+    res.json(list);
+  } catch (error) {
+    res.json({ msg: "An Error occured" + error });
+  }
 };
 
 //to show single products using id by get method
-const ProductById = (req, res, next) => {
-  products
-    .findById(req.params.id)
-    .then((response) => {
-      res.json({ response });
-    })
-    .catch((error) => {
-      res.json({ msg: "An Error occured: " + error });
-    });
+const ProductById = async (req, res, next) => {
+  try {
+    const listById = await products
+      .findById(req.params.id)
+      .populate("brandId", "_id brandName brandType ");
+    res.json(listById);
+  } catch (error) {
+    res.json({ msg: "An Error occured: " + error });
+  }
 };
 
 //to add product details
 
-const productAdd = (req, res) => {
+const productAdd = async (req, res) => {
   try {
-    const newProduct = new products({
+    const newProduct = await new products({
       productName: req.body.productName,
       productCatagory: req.body.productCatagory,
       productPrice: req.body.productPrice,
@@ -45,50 +45,39 @@ const productAdd = (req, res) => {
 
 //to update product details
 
-const productUpdate = (req, res) => {
-  let productId1 = req.body.id;
-  let updatedData = {
-    productName: req.body.productName,
-    productCatagory: req.body.productCatagory,
-    productPrice: req.body.productPrice,
-    productQuantity: req.body.productQuantity,
-    productSold: req.body.productSold,
-    brandId: req.body.brandId,
-  };
-  products
-    .findByIdAndUpdate(productId1, { $set: updatedData })
-    .then(() => {
-      res.json({ msg: `Product updated sucessfully.` });
-    })
-    .catch((err) => {
-      res.json({ msg: "An error occured" + err });
-    });
+const productUpdate = async (req, res) => {
+  try {
+    const productId = await products.findById(req.body.id);
+    Object.assign(productId, req.body);
+    productId.save();
+    res.json({ msg: `Product updated sucessfully.` });
+  } catch (err) {
+    res.json({ msg: "An error occured" + err });
+  }
 };
 
-const productRemove = (req, res) => {
-  let productId = req.params.id;
-  products
-    .findByIdAndRemove(productId)
-    .then((product) => {
+const productRemove = async (req, res) => {
+  try {
+    let productId = req.params.id;
+    await products.findByIdAndRemove(productId).then((product) => {
       res.json({ msg: "product removed sucessfully", product });
-    })
-    .catch((err) => {
-      res.json({ msg: "An error occured: " + err });
     });
+  } catch (err) {
+    res.json({ msg: "An error occured: " + err });
+  }
 };
 
-const productSearch = (req, res) => {
-  const { productName, productCatagory, productSold, productQuantity } =
-    req.query;
-  console.log(req.query);
-  products
-    .find(req.query)
-    .then((response) => {
+const productSearch = async (req, res) => {
+  try {
+    const { productName, productCatagory, productSold, productQuantity } =
+      req.query;
+    console.log(req.query);
+    await products.find(req.query).then((response) => {
       res.json({ response });
-    })
-    .catch((error) => {
-      res.json({ msg: "An Error occured: " + error });
     });
+  } catch (error) {
+    res.json({ msg: "An Error occured: " + error });
+  }
 };
 
 module.exports = {
