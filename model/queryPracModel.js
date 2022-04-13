@@ -4,7 +4,10 @@ const animalSchema = new mongoose.Schema(
   {
     animalName: { type: String, trim: true },
     animalBreed: String,
+    animalAge: Number,
+    animalHobbies: [],
   },
+
   { timestamps: true }
 );
 
