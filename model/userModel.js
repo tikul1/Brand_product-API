@@ -1,4 +1,4 @@
-// const { type } = require("express/lib/response");
+const { type } = require("express/lib/response");
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 
@@ -35,6 +35,13 @@ const userSchema = new mongoose.Schema({
     minlength: 6,
     required: true,
   },
+});
+
+userSchema.pre("save", async function (next) {
+  console.log(`${this.password}`);
+  this.password = await bcrypt.hash(this.password, 10);
+
+  next();
 });
 
 module.exports = mongoose.model("User", userSchema);

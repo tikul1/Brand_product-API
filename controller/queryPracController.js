@@ -1,32 +1,37 @@
 const { query } = require("express");
+const res = require("express/lib/response");
 const mongoose = require("mongoose");
-// const res = require("express/lib/response");
 const animals = require("../model/queryPracModel");
+const orders = require("../model/queryPracModel");
+const classes = require("../model/queryPracModel");
+const items = require("../model/queryPracModel");
+const warehouses = require("../model/queryPracModel");
+const salaries = require("../model/queryPracModel");
 
-const animalList = async (req, res) => {
-  try {
-    const list = await animals.find();
-    res.json(list);
-  } catch (error) {
-    res.json({ msg: "An Error occured" + error });
-  }
-};
+// const animalList = async (req, res) => {
+//   try {
+//     const list = await animals.find();
+//     res.json(list);
+//   } catch (error) {
+//     res.json({ msg: "An Error occured" + error });
+//   }
+// };
 
-const animalAdd = async (req, res) => {
-  try {
-    const newAnimal = await new animals({
-      animalName: req.body.animalName,
-      animalBreed: req.body.animalBreed,
-      animalAge: req.body.animalAge,
-      animalHobbies: req.body.animalHobbies,
-    });
+// const animalAdd = async (req, res) => {
+//   try {
+//     const newAnimal = await new animals({
+//       animalName: req.body.animalName,
+//       animalBreed: req.body.animalBreed,
+//       animalAge: req.body.animalAge,
+//       animalHobbies: req.body.animalHobbies,
+//     });
 
-    await newAnimal.save();
-    res.json(newAnimal);
-  } catch (error) {
-    res.json("Error Occured");
-  }
-};
+//     await newAnimal.save();
+//     res.json(newAnimal);
+//   } catch (error) {
+//     res.json("Error Occured");
+//   }
+// };
 
 // animals.findOne({ animalName: "dog" }, (err, data) => {
 //   if (err) {
@@ -49,12 +54,13 @@ const animalAdd = async (req, res) => {
 // };
 // findQuery();
 
-//using in, nin
+//aggregate is used for showing POJOS
+
 // const findQuery = async () => {
 //   try {
-//     const result = await animals
-//       .find({ animalName: { $in: ["bird", "dog"] } })
-//       .select({ animalBreed: 1 });
+//     const result = await animals.aggregate([
+//       { $match: { animalName: "bird" } },
+//     ]);
 
 //     console.log(result);
 //   } catch (err) {
@@ -63,15 +69,25 @@ const animalAdd = async (req, res) => {
 // };
 // findQuery();
 
-// and or operator
+// using in, nin
+// const findQuery = async () => {
+//   try {
+//     const result = await animals.find({ animalBreed: { $nin: ["husky"] } });
+
+//     console.log(result);
+//   } catch (err) {
+//     console.log(err);
+//   }
+// };
+// findQuery();
+
+// and/ or operator
 
 // const findQuery = async () => {
 //   try {
-//     const result = await animals
-//       .find({
-//         $or: [{ animalName: "bird" }, { animalName: "dog" }],
-//       })
-//       .select({ animalBreed: 1 });
+//     const result = await animals.find({
+//       $and: [{ animalName: "bird" }, { animalBreed: "parrot" }],
+//     });
 
 //     console.log(result);
 //   } catch (err) {
@@ -138,7 +154,8 @@ const animalAdd = async (req, res) => {
 //   try {
 //     await q.exec();
 //     // await q.exec();
-//     await q.clone().exec();
+//     const xyz = await q.clone().exec();
+//     console.log(xyz);
 //   } catch (err) {
 //     err;
 //   }
@@ -159,9 +176,7 @@ const animalAdd = async (req, res) => {
 // finding count
 // const findQuery = async () => {
 //   try {
-//     const result = await animals
-//       .where({ animalName: "bird" })
-//       .count()
+//     const result = await animals.where({ animalName: "bird" }).count();
 
 //     console.log(result);
 //   } catch (err) {
@@ -185,7 +200,7 @@ const animalAdd = async (req, res) => {
 //exists check for collections
 // const findQuery = async () => {
 //   try {
-//     const result = await animals.where("animalName").exists(false);
+//     const result = await animals.where("animalName").exists(true);
 
 //     console.log(result);
 //   } catch (err) {
@@ -214,7 +229,7 @@ const animalAdd = async (req, res) => {
 //   try {
 //     const result = await animals.findOneAndUpdate(
 //       { _id: id },
-//       { $set: { animalName: "dog1", animalBreed: "labrador" } },
+//       { $set: { animalName: "dog2", animalBreed: "labrador" } },
 //       { new: true, upsert: true }
 //     );
 //     console.log(result);
@@ -269,7 +284,7 @@ const animalAdd = async (req, res) => {
 
 // const findQuery = async () => {
 //   try {
-//     const result = await animals.where("animalHobbies").slice(2);
+//     const result = await animals.where("animalHobbies").slice(0);
 //     console.log(result);
 //   } catch (err) {
 //     console.log(err);
@@ -278,12 +293,10 @@ const animalAdd = async (req, res) => {
 
 // findQuery();
 
-//asc/desc /1 / -1
+// asc / desc / 1 / -1;
 // const findQuery = async () => {
 //   try {
-//     const result = await animals
-//       .find()
-//       .sort({ animalBreed: "desc", animalAge: -1 });
+//     const result = await animals.find().sort({ animalBreed: "desc" });
 //     console.log(result);
 //   } catch (err) {
 //     console.log(err);
@@ -292,4 +305,376 @@ const animalAdd = async (req, res) => {
 
 // findQuery();
 
-module.exports = { animalList, animalAdd };
+// aggregate
+
+// const findQuery = async () => {
+//   try {
+//     const result = await animals.aggregate([
+//       { $project: { _id: 0, animalName: 0 } },
+//       { $match: { animalAge: { $gte: 3 } } },
+//     ]);
+//     console.log(result);
+//   } catch (err) {
+//     console.log(err);
+//   }
+// };
+
+// findQuery();
+
+//addfields
+
+// const findQuery = async () => {
+//   try {
+//     const result = await animals.aggregate([
+//       {
+//         $addFields: {
+//           legs: "2 or 4",
+//         },
+//       },
+//     ]);
+//     console.log(result);
+//   } catch (err) {
+//     console.log(err);
+//   }
+// };
+
+// findQuery();
+
+// addfields in array
+
+// const findQuery = async () => {
+//   try {
+//     const result = await animals.aggregate([
+//       {
+//         $addFields: {
+//           animalHobbies: { $concatArrays: ["$animalHobbies", ["sleeping"]] },
+//         },
+//       },
+//     ]);
+//     console.log(result);
+//   } catch (err) {
+//     console.log(err);
+//   }
+// };
+
+// findQuery();
+
+// const findQuery = async (req, res) => {
+//   try {
+//     const result = await animals.aggregate([
+//       {
+//         $bucket: {
+//           groupBy: "$animalAge",
+//           boundaries: [5, 9],
+//           default: "Other",
+//           output: {
+//             count: { $sum: 1 },
+//             animals: {
+//               $push: {
+//                 animal: { $concat: ["$animalName", " ", "$animalBreed"] },
+//                 animalAge: "$animalAge",
+//               },
+//             },
+//           },
+//         },
+//       },
+//       {
+//         $match: { count: { $gt: 2 } },
+//       },
+//     ]);
+//     // let x = JSON.stringify(result);
+//     // console.log(x);
+//     res.json(result);
+//   } catch (err) {
+//     console.log({ err });
+//   }
+// };
+
+// const findQuery = async (req, res) => {
+//   try {
+//     const result = await animals.aggregate([
+//       {
+//         $bucketAuto: {
+//           groupBy: "$animalAge",
+//           buckets: 4,
+//           output: {
+//             count: { $sum: 1 },
+//             titles: { $push: "$animalBreed" },
+//           },
+//         },
+//       },
+//     ]);
+
+//     res.json(result);
+//   } catch (err) {
+//     console.log({ err });
+//   }
+// };
+
+//to find statistics regarding a collection
+// const findQuery = async (req, res) => {
+//   try {
+//     const result = await animals.aggregate([
+//       {
+//         $collStats: {
+//           latencyStats: { histograms: true },
+//           storageStats: { scale: 2 },
+//           count: {},
+
+//           queryExecStats: {},
+//         },
+//       },
+//     ]);
+
+//     res.json(result);
+//   } catch (err) {
+//     console.log({ err });
+//   }
+// };
+
+//facet to use multiple aggregations
+
+// const findQuery = async (req, res) => {
+//   try {
+//     const result = await animals.aggregate([
+//       {
+//         $facet: {
+//           categorizedbyAge: [
+//             {
+//               $bucket: {
+//                 groupBy: "$animalAge",
+//                 boundaries: [5, 9],
+//                 default: "Other",
+//                 output: {
+//                   count: { $sum: 1 },
+//                   animals: {
+//                     $push: {
+//                       animal: { $concat: ["$animalName", " ", "$animalBreed"] },
+//                       animalAge: "$animalAge",
+//                     },
+//                   },
+//                 },
+//               },
+//             },
+//             {
+//               $match: { count: { $gt: 2 } },
+//             },
+//           ],
+//           categorizedbyId: [
+//             {
+//               $bucketAuto: {
+//                 groupBy: "$_id",
+//                 buckets: 4,
+//               },
+//             },
+//           ],
+//         },
+//       },
+//     ]);
+//     res.json(result);
+//   } catch (err) {
+//     console.log({ err });
+//   }
+// };
+
+//group and count
+// const findQuery = async (req, res) => {
+//   try {
+//     const result = await animals.aggregate([
+//       {
+//         $group: {
+//           _id: null,
+//           count: { $count: {} },
+//         },
+//       },
+//     ]);
+
+//     res.json(result);
+//   } catch (err) {
+//     console.log({ err });
+//   }
+// };
+
+// group avrage ,count and sum ,muliply
+// const findQuery = async (req, res) => {
+//   try {
+//     const result = await animals.aggregate([
+//       {
+//         $group: {
+//           _id: "$animalAge",
+//           totalAge: { $sum: { $multiply: ["$animalAge", "$animalAge"] } },
+//           avgAge: { $avg: "$aanimalAge" },
+//         },
+//       },
+//     ]);
+
+//     res.json(result);
+//   } catch (err) {
+//     console.log({ err });
+//   }
+// };
+
+//lookup use
+// const findQuery = async (req, res) => {
+//   try {
+//     const result = await orders.aggregate([
+//       {
+//         $lookup: {
+//           from: "inventory",
+//           localField: "item",
+//           foreignField: "sku",
+//           as: "inventory_docs",
+//         },
+//       },
+//     ]);
+
+//     res.json(result);
+//   } catch (err) {
+//     console.log({ err });
+//   }
+// };
+
+// lookip in array
+
+// const findQuery = async (req, res) => {
+//   try {
+//     const result = await classes.aggregate([
+//       {
+//         $lookup: {
+//           from: "members",
+//           localField: "enrollmentlist",
+//           foreignField: "name",
+//           as: "enrollee_info",
+//         },
+//       },
+//     ]);
+
+//     res.json(result);
+//   } catch (err) {
+//     console.log({ err });
+//   }
+// };
+
+//mmerging
+
+// const findQuery = async (req, res) => {
+//   try {
+//     const result = await orders.aggregate([
+//       {
+//         $lookup: {
+//           from: "items",
+//           localField: "item",
+//           foreignField: "item",
+//           as: "fromItems  ",
+//         },
+//       },
+//       {
+//         $replaceRoot: {
+//           newRoot: {
+//             $mergeObjects: [{ $arrayElemAt: ["$fromItems", 0] }, "$$ROOT"],
+//           },
+//         },
+//       },
+//       { $project: { fromItems: 0 } },
+//     ]);
+
+//     res.json(result);
+//   } catch (err) {
+//     console.log({ err });
+//   }
+// };
+
+// multiple joins in query using lookup
+
+// const findQuery = async (req, res) => {
+//   try {
+//     const result = await orders.aggregate([
+//       {
+//         $lookup: {
+//           from: "warehouses",
+//           let: { order_item: "$item", order_qty: "$ordered" },
+//           pipeline: [
+//             {
+//               $match: {
+//                 $expr: {
+//                   $and: [
+//                     { $eq: ["$stock_item", "$$order_item"] },
+//                     { $gte: ["$instock", "$$order_qty"] },
+//                   ],
+//                 },
+//               },
+//             },
+//             { $project: { stock_item: 0, _id: 0 } },
+//           ],
+//           as: "stockdata",
+//         },
+//       },
+//     ]);
+//     res.json(result);
+//   } catch (err) {
+//     console.log({ err });
+//   }
+// };
+
+//////merge
+
+// const findQuery = async (req, res) => {
+//   try {
+//     const result = await orders.aggregate([
+//       [{ $project: { _id: 0 } }, { $merge: { into: "newCollection" } }],
+//     ]);
+//     res.json(result);
+//   } catch (err) {
+//     console.log({ err });
+//   }
+// };
+
+// const findQuery = async (req, res) => {
+//   try {
+//     const result = await getSiblingDB("zoo").salaries.orders.aggregate([
+//       {
+//         $group: {
+//           _id: { fiscal_year: "$fiscal_year", dept: "$dept" },
+//           salaries: { $sum: "$salary" },
+//         },
+//       },
+//       {
+//         $merge: {
+//           into: { db: "reporting", coll: "budgets" },
+//           on: "_id",
+//           whenMatched: "replace",
+//           whenNotMatched: "insert",
+//         },
+//       },
+//     ]);
+
+//     res.json(result);
+//   } catch (err) {
+//     console.log({ err });
+//   }
+// };
+
+//replacewith
+
+const findQuery = async (req, res) => {
+  try {
+    const result = await animals.aggregate([
+      {
+        $match: {
+          animalName: {
+            $exists: true,
+            $not: { $type: "array" },
+            $type: "object",
+          },
+        },
+      },
+      { $replaceWith: "$name" },
+    ]);
+
+    res.json(result);
+  } catch (err) {
+    console.log({ err });
+  }
+};
+
+module.exports = { findQuery };
