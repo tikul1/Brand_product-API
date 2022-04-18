@@ -15,3 +15,4 @@ app.use("/products", require("./routes/productRoutes"));
 app.use("/brands", require("./routes/brandRoutes"));
 app.use("/users", require("./routes/userRoutes"));
 app.use("/animals", require("./routes/queryPracRoutes"));
+app.use("/lodash", require("./routes/lodashRoutes"));
