@@ -43,10 +43,17 @@ const salarySchema = new mongoose.Schema({
   salary: Number,
   fiscal_year: Number,
 });
+const q1Schema = new mongoose.Schema({
+  store: String,
+  item: String,
+  quantity: Number,
+});
 
+// module.exports = mongoose.model("Order", orderSchema);
+// module.exports = mongoose.model("SalesQ1", q1Schema);
 module.exports = mongoose.model("Animal", animalSchema);
-// // module.exports = mongoose.model("Order", orderSchema);
-// // module.exports = mongoose.model("class", classesSchema);
-// // module.exports = mongoose.model("Item", itemsSchema);
-// // module.exports = mongoose.model("Warehouse", warehousesSchema);
+
+// module.exports = mongoose.model("class", classesSchema);
+// module.exports = mongoose.model("Item", itemsSchema);
+// module.exports = mongoose.model("Warehouse", warehousesSchema);
 // module.exports = mongoose.model("salary", salarySchema);

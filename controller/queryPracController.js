@@ -1,16 +1,17 @@
 const { query } = require("express");
 const res = require("express/lib/response");
 const mongoose = require("mongoose");
-const animals = require("../model/queryPracModel");
+const Animals = require("../model/queryPracModel");
 const orders = require("../model/queryPracModel");
 const classes = require("../model/queryPracModel");
 const items = require("../model/queryPracModel");
 const warehouses = require("../model/queryPracModel");
 const salaries = require("../model/queryPracModel");
+const sales2019q1 = require("../model/queryPracModel");
 
 // const animalList = async (req, res) => {
 //   try {
-//     const list = await animals.find();
+//     const list = await Animals.find();
 //     res.json(list);
 //   } catch (error) {
 //     res.json({ msg: "An Error occured" + error });
@@ -19,7 +20,7 @@ const salaries = require("../model/queryPracModel");
 
 // const animalAdd = async (req, res) => {
 //   try {
-//     const newAnimal = await new animals({
+//     const newAnimal = await new Animals({
 //       animalName: req.body.animalName,
 //       animalBreed: req.body.animalBreed,
 //       animalAge: req.body.animalAge,
@@ -33,7 +34,7 @@ const salaries = require("../model/queryPracModel");
 //   }
 // };
 
-// animals.findOne({ animalName: "dog" }, (err, data) => {
+// Animals.findOne({ animalName: "dog" }, (err, data) => {
 //   if (err) {
 //     console.log(err);
 //   } else {
@@ -43,7 +44,7 @@ const salaries = require("../model/queryPracModel");
 
 // const findQuery = async () => {
 //   try {
-//     const result = await animals
+//     const result = await Animals
 //       .find({ animalName: "bird" })
 //       .select({ animalBreed: 1 })
 //       .limit(1);
@@ -58,7 +59,7 @@ const salaries = require("../model/queryPracModel");
 
 // const findQuery = async () => {
 //   try {
-//     const result = await animals.aggregate([
+//     const result = await Animals.aggregate([
 //       { $match: { animalName: "bird" } },
 //     ]);
 
@@ -72,7 +73,7 @@ const salaries = require("../model/queryPracModel");
 // using in, nin
 // const findQuery = async () => {
 //   try {
-//     const result = await animals.find({ animalBreed: { $nin: ["husky"] } });
+//     const result = await Animals.find({ animalBreed: { $nin: ["husky"] } });
 
 //     console.log(result);
 //   } catch (err) {
@@ -85,7 +86,7 @@ const salaries = require("../model/queryPracModel");
 
 // const findQuery = async () => {
 //   try {
-//     const result = await animals.find({
+//     const result = await Animals.find({
 //       $and: [{ animalName: "bird" }, { animalBreed: "parrot" }],
 //     });
 
@@ -98,7 +99,7 @@ const salaries = require("../model/queryPracModel");
 
 // const updateQuery = async () => {
 //   try {
-//     const result = await animals.updateOne(
+//     const result = await Animals.updateOne(
 //       { animalAge: { $gte: 5 } },
 //       { animalName: "cat" }
 //     );
@@ -109,7 +110,7 @@ const salaries = require("../model/queryPracModel");
 // };
 // updateQuery();
 
-// animals.updateMany(
+// Animals.updateMany(
 //   { animalAge: { $gte: 5 } },
 //   { animalName: "cat" },
 //   (err, uData) => {
@@ -121,7 +122,7 @@ const salaries = require("../model/queryPracModel");
 //   }
 // );
 
-// animals.findOne({ animalAge: { $gte: 5 } }, (err, udata) => {
+// Animals.findOne({ animalAge: { $gte: 5 } }, (err, udata) => {
 //   if (err) {
 //     console.log(err);
 //   } else {
@@ -131,7 +132,7 @@ const salaries = require("../model/queryPracModel");
 
 //findbyid
 // let id = "6256523b4931ef1657fb6c63";
-// animals.findById(id, (err, udata) => {
+// Animals.findById(id, (err, udata) => {
 //   if (err) {
 //     console.log(err);
 //   } else {
@@ -141,7 +142,7 @@ const salaries = require("../model/queryPracModel");
 
 //byid remove and delete
 // let id = "6255101b054ef84406a6ce79";
-// animals.findByIdAndDelete(id, (err, udata) => {
+// Animals.findByIdAndDelete(id, (err, udata) => {
 //   if (err) {
 //     console.log(err);
 //   } else {
@@ -150,7 +151,7 @@ const salaries = require("../model/queryPracModel");
 // });
 
 // //clone to execute it later
-// const q = animals.findOne({ animalName: "dog" }, async (req, res) => {
+// const q = Animals.findOne({ animalName: "dog" }, async (req, res) => {
 //   try {
 //     await q.exec();
 //     // await q.exec();
@@ -164,7 +165,7 @@ const salaries = require("../model/queryPracModel");
 
 // const findQuery = async () => {
 //   try {
-//     const result = await animals.where({ animalName: "bird" });
+//     const result = await Animals.where({ animalName: "bird" });
 
 //     console.log(result);
 //   } catch (err) {
@@ -176,7 +177,7 @@ const salaries = require("../model/queryPracModel");
 // finding count
 // const findQuery = async () => {
 //   try {
-//     const result = await animals.where({ animalName: "bird" }).count();
+//     const result = await Animals.where({ animalName: "bird" }).count();
 
 //     console.log(result);
 //   } catch (err) {
@@ -188,7 +189,7 @@ const salaries = require("../model/queryPracModel");
 //using .all
 // const findQuery = async () => {
 //   try {
-//     const result = await animals.where({ animalName: "bird" }).all();
+//     const result = await Animals.where({ animalName: "bird" }).all();
 
 //     console.log(result);
 //   } catch (err) {
@@ -200,7 +201,7 @@ const salaries = require("../model/queryPracModel");
 //exists check for collections
 // const findQuery = async () => {
 //   try {
-//     const result = await animals.where("animalName").exists(true);
+//     const result = await Animals.where("animalName").exists(true);
 
 //     console.log(result);
 //   } catch (err) {
@@ -212,7 +213,7 @@ const salaries = require("../model/queryPracModel");
 // //preferable than countdocument. as this will scan data from meta data
 // const findQuery = async () => {
 //   try {
-//     const result = await animals.find().estimatedDocumentCount();
+//     const result = await Animals.find().estimatedDocumentCount();
 //     console.log("document count is : %d", result);
 //   } catch (err) {
 //     console.log(err);
@@ -227,7 +228,7 @@ const salaries = require("../model/queryPracModel");
 // let id = "625672854e186b2cfe2277f0";
 // const findQuery = async () => {
 //   try {
-//     const result = await animals.findOneAndUpdate(
+//     const result = await Animals.findOneAndUpdate(
 //       { _id: id },
 //       { $set: { animalName: "dog2", animalBreed: "labrador" } },
 //       { new: true, upsert: true }
@@ -244,7 +245,7 @@ const salaries = require("../model/queryPracModel");
 
 // const findQuery = async () => {
 //   try {
-//     const result = await animals.find().lean(true);
+//     const result = await Animals.find().lean(true);
 //     console.log(result);
 //   } catch (err) {
 //     console.log(err);
@@ -257,7 +258,7 @@ const salaries = require("../model/queryPracModel");
 
 // const findQuery = async () => {
 //   try {
-//     const result = await animals.find().limit(5);
+//     const result = await Animals.find().limit(5);
 //     console.log(result);
 //   } catch (err) {
 //     console.log(err);
@@ -270,7 +271,7 @@ const salaries = require("../model/queryPracModel");
 
 // const findQuery = async () => {
 //   try {
-//     const result = await animals.find().skip(10).limit(5);
+//     const result = await Animals.find().skip(10).limit(5);
 //     console.log(result);
 //   } catch (err) {
 //     console.log(err);
@@ -284,7 +285,7 @@ const salaries = require("../model/queryPracModel");
 
 // const findQuery = async () => {
 //   try {
-//     const result = await animals.where("animalHobbies").slice(0);
+//     const result = await Animals.where("animalHobbies").slice(0);
 //     console.log(result);
 //   } catch (err) {
 //     console.log(err);
@@ -296,7 +297,7 @@ const salaries = require("../model/queryPracModel");
 // asc / desc / 1 / -1;
 // const findQuery = async () => {
 //   try {
-//     const result = await animals.find().sort({ animalBreed: "desc" });
+//     const result = await Animals.find().sort({ animalBreed: "desc" });
 //     console.log(result);
 //   } catch (err) {
 //     console.log(err);
@@ -309,7 +310,7 @@ const salaries = require("../model/queryPracModel");
 
 // const findQuery = async () => {
 //   try {
-//     const result = await animals.aggregate([
+//     const result = await Animals.aggregate([
 //       { $project: { _id: 0, animalName: 0 } },
 //       { $match: { animalAge: { $gte: 3 } } },
 //     ]);
@@ -325,7 +326,7 @@ const salaries = require("../model/queryPracModel");
 
 // const findQuery = async () => {
 //   try {
-//     const result = await animals.aggregate([
+//     const result = await Animals.aggregate([
 //       {
 //         $addFields: {
 //           legs: "2 or 4",
@@ -344,7 +345,7 @@ const salaries = require("../model/queryPracModel");
 
 // const findQuery = async () => {
 //   try {
-//     const result = await animals.aggregate([
+//     const result = await Animals.aggregate([
 //       {
 //         $addFields: {
 //           animalHobbies: { $concatArrays: ["$animalHobbies", ["sleeping"]] },
@@ -361,15 +362,15 @@ const salaries = require("../model/queryPracModel");
 
 // const findQuery = async (req, res) => {
 //   try {
-//     const result = await animals.aggregate([
+//     const result = await Animals.aggregate([
 //       {
 //         $bucket: {
 //           groupBy: "$animalAge",
-//           boundaries: [5, 9],
+//           boundaries: [1, 3, 4, 7, 8, 9],
 //           default: "Other",
 //           output: {
 //             count: { $sum: 1 },
-//             animals: {
+//             Animals: {
 //               $push: {
 //                 animal: { $concat: ["$animalName", " ", "$animalBreed"] },
 //                 animalAge: "$animalAge",
@@ -379,11 +380,9 @@ const salaries = require("../model/queryPracModel");
 //         },
 //       },
 //       {
-//         $match: { count: { $gt: 2 } },
+//         $match: { count: { $gt: 1 } },
 //       },
 //     ]);
-//     // let x = JSON.stringify(result);
-//     // console.log(x);
 //     res.json(result);
 //   } catch (err) {
 //     console.log({ err });
@@ -392,11 +391,11 @@ const salaries = require("../model/queryPracModel");
 
 // const findQuery = async (req, res) => {
 //   try {
-//     const result = await animals.aggregate([
+//     const result = await Animals.aggregate([
 //       {
 //         $bucketAuto: {
 //           groupBy: "$animalAge",
-//           buckets: 4,
+//           buckets: 5,
 //           output: {
 //             count: { $sum: 1 },
 //             titles: { $push: "$animalBreed" },
@@ -414,7 +413,7 @@ const salaries = require("../model/queryPracModel");
 //to find statistics regarding a collection
 // const findQuery = async (req, res) => {
 //   try {
-//     const result = await animals.aggregate([
+//     const result = await Animals.aggregate([
 //       {
 //         $collStats: {
 //           latencyStats: { histograms: true },
@@ -436,7 +435,7 @@ const salaries = require("../model/queryPracModel");
 
 // const findQuery = async (req, res) => {
 //   try {
-//     const result = await animals.aggregate([
+//     const result = await Animals.aggregate([
 //       {
 //         $facet: {
 //           categorizedbyAge: [
@@ -447,7 +446,7 @@ const salaries = require("../model/queryPracModel");
 //                 default: "Other",
 //                 output: {
 //                   count: { $sum: 1 },
-//                   animals: {
+//                   Animals: {
 //                     $push: {
 //                       animal: { $concat: ["$animalName", " ", "$animalBreed"] },
 //                       animalAge: "$animalAge",
@@ -457,7 +456,7 @@ const salaries = require("../model/queryPracModel");
 //               },
 //             },
 //             {
-//               $match: { count: { $gt: 2 } },
+//               $match: { count: { $gt: 1 } },
 //             },
 //           ],
 //           categorizedbyId: [
@@ -477,10 +476,10 @@ const salaries = require("../model/queryPracModel");
 //   }
 // };
 
-//group and count
+// group and count
 // const findQuery = async (req, res) => {
 //   try {
-//     const result = await animals.aggregate([
+//     const result = await Animals.aggregate([
 //       {
 //         $group: {
 //           _id: null,
@@ -498,12 +497,12 @@ const salaries = require("../model/queryPracModel");
 // group avrage ,count and sum ,muliply
 // const findQuery = async (req, res) => {
 //   try {
-//     const result = await animals.aggregate([
+//     const result = await Animals.aggregate([
 //       {
 //         $group: {
 //           _id: "$animalAge",
 //           totalAge: { $sum: { $multiply: ["$animalAge", "$animalAge"] } },
-//           avgAge: { $avg: "$aanimalAge" },
+//           avgAge: { $avg: "$animalAge" },
 //         },
 //       },
 //     ]);
@@ -555,7 +554,7 @@ const salaries = require("../model/queryPracModel");
 //   }
 // };
 
-//mmerging
+//merging
 
 // const findQuery = async (req, res) => {
 //   try {
@@ -629,9 +628,11 @@ const salaries = require("../model/queryPracModel");
 //   }
 // };
 
+//kam nu nathi
+
 // const findQuery = async (req, res) => {
 //   try {
-//     const result = await getSiblingDB("zoo").salaries.orders.aggregate([
+//     const result = await getSiblingDB("zoo").salaries.aggregate([
 //       {
 //         $group: {
 //           _id: { fiscal_year: "$fiscal_year", dept: "$dept" },
@@ -656,21 +657,81 @@ const salaries = require("../model/queryPracModel");
 
 //replacewith
 
+// const findQuery = async (req, res) => {
+//   try {
+//     const result = await Animals.aggregate([
+//       {
+//         $match: {
+//           animalName: {
+//             $exists: true,
+//             $not: { $type: "array" },
+//             $type: "object",
+//           },
+//         },
+//       },
+//       { $replaceWith: { $mergeObjects: [ { _id: "$_id", first: "", last: "" }, "$name" ] } },
+//     ]);
+
+//     res.json(result);
+//   } catch (err) {
+//     console.log({ err });
+//   }
+// };
+
+// const findQuery = async (req, res) => {
+//   try {
+//     const result = await Animals.aggregate([
+//       { $unwind: "$animalHobbies" },
+//       { $sortByCount: "$animalHobbies" },
+//     ]);
+//     res.json(result);
+//   } catch (err) {
+//     console.log({ err });
+//   }
+// };
+
+// const findQuery = async (req, res) => {
+//   try {
+//     const result = await Animals.aggregate([{ $skip: 5 }]);
+//     res.json(result);
+//   } catch (err) {
+//     console.log({ err });
+//   }
+// };
+
+// const findQuery = async (req, res) => {
+//   try {
+//     const result = await sales2019q1.aggregate([
+//       { $set: { _id: "2019Q1" } },
+//       {
+//         $unionWith: {
+//           coll: "sales2019q2",
+//           pipeline: [{ $set: { _id: "2019Q2" } }],
+//         },
+//       },
+//       { $sort: { _id: 1, store: 1, item: 1 } },
+//     ]);
+//     res.json(result);
+//   } catch (err) {
+//     console.log({ err });
+//   }
+// };
+
+// const findQuery = async (req, res) => {
+//   try {
+//     const result = await sales2019q1.aggregate([
+//       { $unset: "quantity" },
+
+//     ]);
+//     res.json(result);
+//   } catch (err) {
+//     console.log({ err });
+//   }
+// };
+
 const findQuery = async (req, res) => {
   try {
-    const result = await animals.aggregate([
-      {
-        $match: {
-          animalName: {
-            $exists: true,
-            $not: { $type: "array" },
-            $type: "object",
-          },
-        },
-      },
-      { $replaceWith: "$name" },
-    ]);
-
+    const result = await Animals.aggregate([{ $unwind: "$animalHobbies" }]);
     res.json(result);
   } catch (err) {
     console.log({ err });
