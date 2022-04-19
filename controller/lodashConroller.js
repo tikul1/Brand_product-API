@@ -450,4 +450,59 @@ var array2 = [
 // console.log(_.toString(""));
 // console.log(_.toString("-0"));
 
+//objectsss
+
+// console.log(_.assign({ a: 1, c: 3 }, { a: 0, c: 4, d: 6 }));
+
+// function x() {
+//   this.a = 1;
+// }
+
+// function y() {
+//   this.c = 3;
+// }
+
+// x.prototype.b = 10;
+// y.prototype.d = 40;
+
+// console.log(_.assignIn({ a: 4 }, new x(), new y()));
+
+//=============> query
+
+// function customizer(objectVal, sourceVal) {
+//   return _.isUndefined(objectVal) ? sourceVal : objectVal;
+// }
+
+// let obj = _.assignInWith({ a: 1 }, { b: 3 }, customizer);
+
+// console.log(obj);
+
+// var object = { a: [{ b: { c: 3 } }, 4] };
+
+// console.log(_.at(object, ["a[0].b.c", "a[1]"]));
+
+// function abc() {
+//   return true;
+// }
+
+// console.log(
+//   _.create(abc.prototype, {
+//     hardik: "parmar",
+//   })
+// );
+
+a = _.defaults(
+  { a: 3 },
+  { b: 1 }
+  // { a: 6 },
+  // { a: 7 },
+  // { a: 8 },
+  // { c: 1 },
+  // { b: 10 },
+  // { d: 12 }
+);
+console.log(a);
+
+// console.log(_.defaultsDeep({ a: { b: 2 } }, { a: { b: 1, c: 3 } }));
+
 module.exports = { _ };
