@@ -253,22 +253,22 @@ var otherObjects = [
 
 // console.log(_.includes([1, 2, 3], 1));     //checks wether value is in array or not
 
-// console.log(
-//   _.invokeMap(
-//     [
-//       [5, 1, 7],
-//       [3, 2, 1],
-//     ],
-//     "sort"
-//   )
-// );
+console.log(
+  _.invokeMap(
+    [
+      [5, 1, 7],
+      [3, 2, 1],
+    ],
+    "sort"
+  )
+);
 
-// console.log(_.invokeMap([137, 568], String.prototype.split, ""));
+console.log(_.invokeMap([137, 568], String.prototype.split, ""));
 
-var array2 = [
-  { dir: "left", code: 97 },
-  { dir: "right", code: 100 },
-];
+// var array2 = [
+//   { dir: "left", code: 97 },
+//   { dir: "right", code: 100 },
+// ];
 // console.log(
 //   _.keyBy(array2, (o) => {
 //     return String.fromCharCode(o.code);
@@ -491,18 +491,251 @@ var array2 = [
 //   })
 // );
 
-a = _.defaults(
-  { a: 3 },
-  { b: 1 }
-  // { a: 6 },
-  // { a: 7 },
-  // { a: 8 },
-  // { c: 1 },
-  // { b: 10 },
-  // { d: 12 }
-);
-console.log(a);
+// a = _.defaults(
+//   { a: 3 },
+//   { b: 1 }
+//   // { a: 6 },
+//   // { a: 7 },
+//   // { a: 8 },
+//   // { c: 1 },
+//   // { b: 10 },
+//   // { d: 12 }
+// );
+// console.log(a);
 
 // console.log(_.defaultsDeep({ a: { b: 2 } }, { a: { b: 1, c: 3 } }));
+
+// function abc() {
+//   this.a = 1;
+//   this.b = 2;
+// }
+
+// abc.prototype.c = 3;
+
+// console.log(_.toPairs(new abc()));
+
+// function abc() {
+//   this.a = 1;
+//   this.b = 2;
+// }
+
+// abc.prototype.c = 3;
+
+// console.log(_.toPairsIn(new abc()));
+
+// console.log(
+//   _.transform(
+//     [2, 3, 4],
+//      (result, n) => {
+//       result.push((n *= n));
+//       return n % 2 == 0;
+//     },
+//     []
+//   )
+// );
+
+// var object = { a: [{ b: { c: 7 } }] };
+// // _.unset(object, "a[0].b.c");
+// // console.log(object);
+// console.log(
+//   JSON.stringify(
+//     _.update(object, "a[0].b.c", (num) => {
+//       return num * num;
+//     })
+//   )
+// );
+
+// var object = {};
+
+// console.log(_.updateWith(object, "[0][1]", _.constant("a"), Object));
+
+// console.log(_.values("hi"));
+
+// function abc() {
+//   this.a = 1;
+//   this.b = 2;
+// }
+
+// abc.prototype.c = 3;
+
+// console.log(_.valuesIn(new abc()));
+
+// var users2 = {
+//   barney: { age: 36, active: true },
+//   fred: { age: 40, active: false },
+//   pebbles: { age: 1, active: true },
+// };
+
+// console.log(
+//   _.findKey(users2, function (o) {
+//     return o.age < 40;
+//   })
+// );
+
+// function abc() {
+//   this.a = _.constant("a");
+//   this.b = _.constant("b");
+// }
+
+// abc.prototype.c = _.constant("c");
+
+// console.log(_.functions(new abc()));
+
+// function abc() {
+//   this.a = _.constant("a");
+//   this.b = _.constant("b");
+// }
+
+// abc.prototype.c = _.constant("c");
+
+// console.log(_.functionsIn(new abc()));
+
+// var object = { a: [{ b: { c: 3 } }] };
+
+// console.log(_.get(object, "a[0].b.c"));
+// console.log(_.has(object, "a"));
+
+// var object = { a: 1, b: 2, c: 1 };
+
+// console.log(_.invert(object));
+
+// var object = { a: 1, b: 2, c: 1 };
+
+// console.log(_.invertBy(object));
+
+// var object = { a: [{ b: { c: [1, 2, 3, 4] } }] };
+
+// console.log(_.invoke(object, "a[0].b.c.slice", 1, 3));
+
+// console.log(
+//   JSON.stringify(
+//     _.mapKeys({ a: 1, b: 2 }, function (value, key) {
+//       return key;
+//     })
+//   )
+// );
+
+// var users = {
+//   fred: { user: "fred", age: 40 },
+//   pebbles: { user: "pebbles", age: 1 },
+// };
+
+// console.log(
+//   _.mapValues(users, function (o) {
+//     return o.age;
+//   })
+// );
+// console.log(
+//   _.mapValues(users, function (o) {
+//     return o.user;
+//   })
+// );
+
+// var object = {
+//   a: [{ b: 2 }, { d: 4 }],
+// };
+
+// var other = {
+//   a: [{ c: 3 }, { e: 5 }],
+// };
+// console.log(_.merge(object, other));
+
+// var object = { a: 1, b: "2", c: 3 };
+
+// console.log(_.omit(object, ["a", "c"]));
+// console.log(_.omitBy(object, _.isNumber));
+
+// var object = { a: 1, b: "2", c: 3 };
+
+// console.log(_.pick(object, ["a", "c"]));
+
+// var object = { a: [{ b: { c: 3 } }] };
+
+// _.set(object, "a[0].b.c", 4);
+// console.log(object.a[0].b.c);
+
+// var users = [
+//   { user: "barney", age: 36 },
+//   { user: "fred", age: 40 },
+//   { user: "pebbles", age: 1 },
+// ];
+
+// var youngest = _.chain(users)
+//   .sortBy("age")
+//   .map(function (o) {
+//     return o.user + " is " + o.age;
+//   })
+//   .head()
+//   .value();
+// console.log(youngest);
+
+// var users = [
+//   { user: "barney", age: 36 },
+//   { user: "fred", age: 40 },
+// ];
+// console.log(_(users).head());
+
+// console.log(_.camelCase("Hardik Parmar"));
+// console.log(_.capitalize("Hardik"));
+// console.log(_.deburr("déjà vu"));
+// console.log(_.endsWith("abc", "c"));
+// console.log(_.endsWith("abc", "b", 2));
+// console.log(_.kebabCase("Hardik Parmar"));
+// console.log(_.lowerCase("Ab_CcD"));
+
+// console.log(_.pad("abc", 8));
+// console.log(_.pad("abc", 8, "_--"));
+// console.log(_.padEnd("abc", 8));
+// console.log(_.padStart("abc", 8));
+// console.log(_.repeat("Hardik", 3));
+// console.log(_.snakeCase("hardik parmar"));
+// console.log(_.startCase("hardik parmar"));
+// console.log(_.trim("  abc  "));
+// console.log(_.trim("  abc  _--- def   "));
+
+// var func = _.cond([
+//   [_.matches({ a: 1 }), _.constant("matches A")],
+//   [_.conforms({ b: _.isNumber }), _.constant("matches B")],
+//   [_.stubTrue, _.constant("no match")],
+// ]);
+
+// console.log(func({ a: 1, b: 2 }));
+
+// console.log(func({ a: 0, b: 1 }));
+
+// console.log(func({ a: "1", b: "2" }));
+
+// var objects = _.times(2, _.constant({ a: 1 }));
+// console.log(objects);
+// console.log(_.defaultTo(undefined, 10));
+
+// var object = { a: 1 };
+
+// console.log(_.identity(object) === object);
+
+// var objects = [
+//   { a: 1, b: 2, c: 3 },
+//   { a: 4, b: 5, c: 6 },
+// ];
+
+// console.log(_.filter(objects, _.matches({ a: 4, c: 6 })));
+
+// console.log(_.find(objects, _.matchesProperty("a", 4)));
+
+// var func = _.nthArg(3);
+// console.log(func("a", "b", "c", "d"));
+
+// console.log(_.range(1, 5));
+// console.log(_.range(4));
+// console.log(_.range(-4));
+
+// console.log(_.times(2, _.stubArray));
+// console.log(_.times(2, _.stubObject));
+// console.log(_.times(2, _.stubString));
+// console.log(_.times(2, _.stubTrue));
+// console.log(_.times(5, String));
+// console.log(_.times(5, _.constant(0)));
+// console.log(_.toPath("a.b.c"));
+// console.log(_.uniqueId("contact_"));
 
 module.exports = { _ };
