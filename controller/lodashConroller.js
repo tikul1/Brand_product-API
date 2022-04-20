@@ -253,17 +253,17 @@ var otherObjects = [
 
 // console.log(_.includes([1, 2, 3], 1));     //checks wether value is in array or not
 
-console.log(
-  _.invokeMap(
-    [
-      [5, 1, 7],
-      [3, 2, 1],
-    ],
-    "sort"
-  )
-);
+// console.log(
+//   _.invokeMap(
+//     [
+//       [5, 1, 7],
+//       [3, 2, 1],
+//     ],
+//     "sort"
+//   )
+// );
 
-console.log(_.invokeMap([137, 568], String.prototype.split, ""));
+// console.log(_.invokeMap([137, 568], String.prototype.split, ""));
 
 // var array2 = [
 //   { dir: "left", code: 97 },

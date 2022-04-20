@@ -7,6 +7,6 @@ router.get("/search/:id", productController.ProductById);
 router.post("/add", productController.productAdd);
 router.put("/update", productController.productUpdate);
 router.delete("/remove/:id", productController.productRemove);
-router.get("/searchp/", productController.productSearch);
+router.get("/searchp", productController.productSearch);
 
 module.exports = router;
