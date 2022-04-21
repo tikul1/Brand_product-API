@@ -14,16 +14,16 @@ const productList = async (req, res) => {
 };
 
 //to show single products using id by get method
-// const ProductById = async (req, res, next) => {
-//   try {
-//     const listById = await products
-//       .findById(req.params.id)
-//       .populate("brandId", "_id brandName brandType ");
-//     res.json(listById);
-//   } catch (error) {
-//     res.json({ msg: "An Error occured: " + error });
-//   }
-// };
+const ProductById = async (req, res, next) => {
+  try {
+    const listById = await products
+      .findById(req.params.id)
+      .populate("brandId", "_id brandName brandType ");
+    res.json(listById);
+  } catch (error) {
+    res.json({ msg: "An Error occured: " + error });
+  }
+};
 
 //to add product details
 
@@ -98,18 +98,19 @@ const productSearch = async (req, res) => {
 //   }
 // };
 
-const ProductById = async (req, res, next) => {
-  try {
-    let listById = await products.findById(req.params.id);
-    for (const key of Object.entries(listById.toJSON())) {
-      console.log(`${key[0]} => ${key[1]}`);
+// const ProductById = async (req, res, next) => {
+//   try {
+//     let listById = await products.findById(req.params.id);
 
-      res.json(listById);
-    }
-  } catch (error) {
-    res.json({ msg: "An Error occured: " + error });
-  }
-};
+//     for (const key of Object.entries(listById.toJSON())) {
+//       console.log(`${key[0]} => ${key[1]}`);
+
+//       // res.json(listById);
+//     }
+//   } catch (error) {
+//     res.json({ msg: "An Error occured: " + error });
+//   }
+// };
 
 // const user = {
 //   name: "hardik",

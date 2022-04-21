@@ -1,5 +1,6 @@
 const users = require("../model/userModel");
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 
 // const createData = async () => {
 //   try {
@@ -47,8 +48,6 @@ const userAdd = async (req, res) => {
 
     await newUser.save();
     res.json(newUser);
-    const match = await bcrypt.compare(req.body.password, newUser.password);
-    console.log(match);
   } catch (error) {
     res.json("Error Occured");
   }
@@ -76,6 +75,38 @@ const userRemove = async (req, res) => {
   }
 };
 
+const userLogin = async (req, res) => {
+  try {
+    let token;
+    const { email, password } = req.body;
+    if (!email || !password) {
+      return res.json({ msg: "please enter username and password" });
+    }
+    const userLogin = await users.findOne({ email });
+    // console.log(userLogin);
+
+    if (userLogin) {
+      const isMatch = await bcrypt.compare(password, userLogin.password);
+      // console.log(isMatch);
+      token = await userLogin.generateAuthToken();
+      console.log(token);
+      if (!isMatch) {
+        res.json({ msg: "Please enter correct credential" });
+      } else {
+        res.json({ msg: "login done " });
+      }
+    } else {
+      res.json({ msg: "Please enter correct credential" });
+    }
+
+    // await users.findOne({ name: name }).then((userexist) => {
+    //   res.json({ msg: "user found" });
+    // });
+  } catch {
+    res.json({ msg: "error" });
+  }
+};
+
 module.exports = {
   // createData,
   userList,
@@ -83,4 +114,5 @@ module.exports = {
   userRemove,
   userUpdate,
   userAdd,
+  userLogin,
 };

@@ -1,7 +1,8 @@
 const { type } = require("express/lib/response");
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
-
+const jwt = require("jsonwebtoken");
+const dotenv = require("dotenv");
 const userSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -35,6 +36,15 @@ const userSchema = new mongoose.Schema({
     minlength: 6,
     required: true,
   },
+
+  tokens: [
+    {
+      token: {
+        type: String,
+        required: true,
+      },
+    },
+  ],
 });
 
 userSchema.pre("save", async function (next) {
@@ -43,5 +53,16 @@ userSchema.pre("save", async function (next) {
 
   next();
 });
+userSchema.methods.generateAuthToken = async function () {
+  try {
+    let SECRET_KEY = "abc";
+    let token = jwt.sign({ _id: this._id }, SECRET_KEY);
+    this.tokens = this.tokens.concat({ token: token });
+    await this.save();
+    return token;
+  } catch (err) {
+    console.log(err);
+  }
+};
 
 module.exports = mongoose.model("User", userSchema);
