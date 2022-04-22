@@ -23,7 +23,7 @@ const secret = process.env.SECRET_KEY;
 const userList = async (req, res) => {
   try {
     const list = await users.find();
-    res.json(list);
+    res.json({ list });
   } catch (error) {
     res.json({ msg: "An Error occured" + error });
   }
@@ -95,12 +95,8 @@ const userLogin = async (req, res) => {
         res.json({ msg: "Please enter correct credential " });
       } else {
         const payload = { email };
-
-        const token = jwt.sign(payload, secret, {
-          noTimestamp: true,
-          expiresIn: "300s",
-        });
-        console.log(token);
+        const token = jwt.sign(payload, secret);
+        // console.log(token);
         res.json({ token });
       }
     } else {
@@ -110,8 +106,8 @@ const userLogin = async (req, res) => {
     // await users.findOne({ name: name }).then((userexist) => {
     //   res.json({ msg: "user found" });
     // });
-  } catch {
-    res.json({ msg: "error" });
+  } catch (e) {
+    res.json({ msg: "error: " + e });
   }
 };
 function verifyToken(req, res, next) {
