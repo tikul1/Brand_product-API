@@ -1,6 +1,7 @@
 const users = require("../model/userModel");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const secret = process.env.SECRET_KEY;
 
 // const createData = async () => {
 //   try {
@@ -83,17 +84,24 @@ const userLogin = async (req, res) => {
       return res.json({ msg: "please enter username and password" });
     }
     const userLogin = await users.findOne({ email });
-    // console.log(userLogin);
+    console.log(userLogin);
 
     if (userLogin) {
       const isMatch = await bcrypt.compare(password, userLogin.password);
       // console.log(isMatch);
-      token = await userLogin.generateAuthToken();
-      console.log(token);
+      // token = await userLogin.generateAuthToken();
+      // console.log(token);
       if (!isMatch) {
-        res.json({ msg: "Please enter correct credential" });
+        res.json({ msg: "Please enter correct credential " });
       } else {
-        res.json({ msg: "login done " });
+        const payload = { email };
+
+        const token = jwt.sign(payload, secret, {
+          noTimestamp: true,
+          expiresIn: "300s",
+        });
+        console.log(token);
+        res.json({ token });
       }
     } else {
       res.json({ msg: "Please enter correct credential" });
@@ -106,6 +114,25 @@ const userLogin = async (req, res) => {
     res.json({ msg: "error" });
   }
 };
+function verifyToken(req, res, next) {
+  const bearerHeader = req.headers["authorization"];
+  // console.log(bearerHeader);
+
+  if (typeof bearerHeader !== undefined) {
+    const bearer = bearerHeader.split(" ");
+    console.log(bearer[1]);
+    req.token = bearer[1];
+    jwt.verify(req.token, secret, (err, authData) => {
+      if (err) {
+        res.json({ result: err });
+      } else {
+        next();
+      }
+    });
+  } else {
+    res.json({ msg: "token not provided" });
+  }
+}
 
 module.exports = {
   // createData,
@@ -115,4 +142,5 @@ module.exports = {
   userUpdate,
   userAdd,
   userLogin,
+  verifyToken,
 };
