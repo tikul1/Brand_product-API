@@ -1,8 +1,25 @@
 const users = require("../model/userModel");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const moment = require("moment");
 const secret = process.env.SECRET_KEY;
-
+// console.log(moment.now());
+// console.log(moment("2022-01-01"));
+// console.log(moment("12-28-2022", "MM-DD-YY"));
+// console.log(moment.utc("2016-12-24T23:35:01"));
+// console.log(moment.utc("2016-12-24T23:35:01").format());
+// console.log(moment("12 March, 2022", ["DDMMMMY", "MMMMDDY"]).format());
+// console.log(moment().add(3, "hours"));
+// console.log(moment("24/12/2022 09:15:00", "DD MM YYYY hh:mm:ss", true));
+// console.log(moment("It is 2012-05-25", "YYYY-MM-DD").isValid());
+// console.log(moment("It is 2012-05-25", "YYYY-MM-DD", true).isValid());
+// console.log(moment("2012-05-25", "YYYY-MM-DD", true).isValid());
+// console.log(moment("2012.05.25", "YYYY-MM-DD", true).isValid());
+// var a = moment();
+// var b = moment.utc();
+// console.log(a.format());
+// // console.log(b);
+// console.log(b.format());
 // const createData = async () => {
 //   try {
 //     const data = new users({
