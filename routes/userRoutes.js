@@ -8,5 +8,15 @@ router.post("/adduser", userController.userAdd);
 router.put("/updateuser", userController.userUpdate);
 router.delete("/removeuser/:id", userController.userRemove);
 router.post("/userlogin", userController.userLogin);
+router.post(
+  "/picupload",
+  userController.upload.single("image"),
+  userController.picUpload
+);
+router.post(
+  "/multipicupload",
+  userController.upload.array("images", 2),
+  userController.multiPicUpload
+);
 
 module.exports = router;

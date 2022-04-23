@@ -2,6 +2,8 @@ const users = require("../model/userModel");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const moment = require("moment");
+const multer = require("multer");
+const path = require("path");
 const secret = process.env.SECRET_KEY;
 // console.log(moment.now());
 // console.log(moment("2022-01-01"));
@@ -36,6 +38,51 @@ const secret = process.env.SECRET_KEY;
 //   }
 // };
 // createData();
+
+const fileStorageEngine = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "./uploads");
+  },
+  filename: (req, file, cb) => {
+    cb(null, moment() + "--" + file.originalname);
+  },
+});
+const upload = multer({
+  storage: fileStorageEngine,
+  limits: { fileSize: 1000000 },
+  fileFilter: function (req, file, cb) {
+    checkFileType(file, cb);
+  },
+});
+function checkFileType(file, cb) {
+  const filetypes = /jpeg|jpg|png|gif/;
+  const extName = filetypes.test(path.extname(file.originalname).toLowerCase());
+  // console.log(path.extname(file.originalname).toLowerCase());
+  const mimeType = filetypes.test(file.mimetype);
+  // console.log(mimeType);
+  if (mimeType && extName) {
+    return cb(null, true);
+  } else {
+    cb("Error: Images only");
+  }
+}
+
+const picUpload = async (req, res) => {
+  try {
+    console.log(req.file);
+    res.send("Image uploaded successfully");
+  } catch (e) {
+    res.send(e);
+  }
+};
+const multiPicUpload = async (req, res) => {
+  try {
+    console.log(req.files);
+    res.send("Images uploaded successfully");
+  } catch (e) {
+    res.send(e);
+  }
+};
 
 const userList = async (req, res) => {
   try {
@@ -95,7 +142,6 @@ const userRemove = async (req, res) => {
 
 const userLogin = async (req, res) => {
   try {
-    let token;
     const { email, password } = req.body;
     if (!email || !password) {
       return res.json({ msg: "please enter username and password" });
@@ -156,4 +202,7 @@ module.exports = {
   userAdd,
   userLogin,
   verifyToken,
+  picUpload,
+  multiPicUpload,
+  upload,
 };
