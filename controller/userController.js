@@ -4,6 +4,12 @@ const jwt = require("jsonwebtoken");
 const moment = require("moment");
 const multer = require("multer");
 const path = require("path");
+// const imageToBase64 = require("image-to-base64");
+// const base64ToImage = require("base64-to-image");
+const encode = require("node-base64-image").encode;
+const decode = require("node-base64-image").decode;
+
+const { response } = require("express");
 const secret = process.env.SECRET_KEY;
 // console.log(moment.now());
 // console.log(moment("2022-01-01"));
@@ -20,7 +26,7 @@ const secret = process.env.SECRET_KEY;
 // var a = moment();
 // var b = moment.utc();
 // console.log(a.format());
-// // console.log(b);
+// console.log(b);
 // console.log(b.format());
 // const createData = async () => {
 //   try {
@@ -39,6 +45,28 @@ const secret = process.env.SECRET_KEY;
 // };
 // createData();
 
+// async function processing2() {
+//   const a = await imageToBase64("./uploads/1650705537697--hi-tech.png");
+//   console.log(a);
+// }
+// processing2();
+
+// async function processing() {
+//   const location =
+//     "https://media.moddb.com/cache/images/members/5/4550/4549205/thumb_620x2000/shrek.jpeg";
+//   const options = {
+//     string: true,
+//     headers: {
+//       "User-Agent": "my-app",
+//     },
+//   };
+//   const image = await encode(location, options);
+//   console.log(image);
+//   await decode(image, { fname: "./uploads2/" + moment(), ext: "jpeg" });
+// }
+// processing();
+
+// console.log(JSON.stringify(imageInfo));
 const fileStorageEngine = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, "./uploads");
@@ -47,6 +75,7 @@ const fileStorageEngine = multer.diskStorage({
     cb(null, moment() + "--" + file.originalname);
   },
 });
+
 const upload = multer({
   storage: fileStorageEngine,
   limits: { fileSize: 1000000 },
