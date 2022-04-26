@@ -75,6 +75,7 @@ const secret = process.env.SECRET_KEY;
 // console.log(a.format());
 // console.log(b);
 // console.log(b.format());
+
 // const createData = async () => {
 //   try {
 //     const data = new users({
@@ -139,7 +140,7 @@ function checkFileType(file, cb) {
   if (mimeType && extName) {
     return cb(null, true);
   } else {
-    cb("Error: Images only");
+    return cb("Error: Images only");
   }
 }
 
