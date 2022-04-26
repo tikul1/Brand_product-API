@@ -9,33 +9,55 @@ const path = require("path");
 const encode = require("node-base64-image").encode;
 const decode = require("node-base64-image").decode;
 const nodemailer = require("nodemailer");
-
-async function mail() {
-  const testing = await nodemailer.createTestAccount;
-  const transporter = nodemailer.createTransport({
-    host: "smtp.ethereal.email",
-    port: 587,
-    secure: false,
-    auth: {
-      user: "jarvis.kulas4@ethereal.email",
-      pass: "kq3a3J79xP4pMzsUtX",
-    },
-  });
-  let info = await transporter.sendMail({
-    from: '"Fred Foo 👻" <abc@gmail.com',
-    to: "hardik.parmar5@gmail.com, jarvis.kulas4@ethereal.email",
-    subject: "Hello ✔",
-    text: "Hello world?",
-    html: "<b>Hello world?</b>",
-  });
-  console.log("Message sent: %s", info.messageId);
-  console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
-}
-mail();
-
 const { response } = require("express");
 const { secureHeapUsed } = require("crypto");
 const secret = process.env.SECRET_KEY;
+
+// async function mail() {
+//   const testing = await nodemailer.createTestAccount;
+//   const transporter = nodemailer.createTransport({
+//     host: "smtp.ethereal.email",
+//     port: 587,
+//     secure: false,
+//     auth: {
+//       user: "jarvis.kulas4@ethereal.email",
+//       pass: "kq3a3J79xP4pMzsUtX",
+//     },
+//   });
+//   let info = await transporter.sendMail({
+//     from: '"Fred Foo 👻" <abc@gmail.com',
+//     to: "hardik.parmar5@gmail.com, jarvis.kulas4@ethereal.email",
+//     subject: "Hello ✔",
+//     text: "Hello world?",
+//     html: "<b>Hello world?</b>",
+//   });
+//   console.log("Message sent: %s", info.messageId);
+//   console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
+// }
+// mail();
+
+// const transporter = nodemailer.createTransport({
+//   host: "smtp-mail.outlook.com",
+//   auth: {
+//     user: "hardik.123.parmar@outlook.com",
+//     pass: "12345678!@#",
+//   },
+// });
+// let info = {
+//   from: '"Hardik parmar" <hardik.123.parmar@outlook.com',
+//   to: "hardik.parmar5@gmail.com",
+//   subject: "Hello ✔",
+//   text: "Hello world?",
+//   // html: "<b>Hello world?</b>",
+// };
+// transporter.sendMail(info, (err, info) => {
+//   if (err) {
+//     console.log(err);
+//     return;
+//   }
+//   console.log(info.response);
+// });
+
 // console.log(moment.now());
 // console.log(moment("2022-01-01"));
 // console.log(moment("12-28-2022", "MM-DD-YY"));
