@@ -10,8 +10,39 @@ const encode = require("node-base64-image").encode;
 const decode = require("node-base64-image").decode;
 const nodemailer = require("nodemailer");
 const { response } = require("express");
-const { secureHeapUsed } = require("crypto");
+const passport = require("passport");
+const LocalStrategy = require("passport-local").Strategy;
 const secret = process.env.SECRET_KEY;
+const session = require("express-session");
+
+const login = (req, res) => {
+  res.send("hello");
+};
+
+const auth = function (email, password, done) {
+  console.log(email, password);
+  users
+    .findOne({ email: email })
+    .then((user) => {
+      if (!user) {
+        return done(null, false, { msg: "the email is not registered" });
+      }
+      bcrypt.compare(password, users.password, (err, isMatch) => {
+        if (err) throw err;
+        if (isMatch) {
+          return done(null, user);
+        } else {
+          return done(null, false, { msg: "password incorrect" });
+        }
+      });
+    })
+    .catch((err) => console.log(err));
+};
+
+const sessionTest = (req, res) => {
+  req.session.test ? req.session.test++ : (req.session.test = 1);
+  res.send(req.session.test.toString());
+};
 
 // async function mail() {
 //   const testing = await nodemailer.createTestAccount;
@@ -217,58 +248,58 @@ const userRemove = async (req, res) => {
   }
 };
 
-const userLogin = async (req, res) => {
-  try {
-    const { email, password } = req.body;
-    if (!email || !password) {
-      return res.json({ msg: "please enter username and password" });
-    }
-    const userLogin = await users.findOne({ email });
-    console.log(userLogin);
+// const userLogin = async (req, res) => {
+//   try {
+//     const { email, password } = req.body;
+//     if (!email || !password) {
+//       return res.json({ msg: "please enter username and password" });
+//     }
+//     const userLogin = await users.findOne({ email });
+//     console.log(userLogin);
 
-    if (userLogin) {
-      const isMatch = await bcrypt.compare(password, userLogin.password);
-      // console.log(isMatch);
-      // token = await userLogin.generateAuthToken();
-      // console.log(token);
-      if (!isMatch) {
-        res.json({ msg: "Please enter correct credential " });
-      } else {
-        const payload = { email };
-        const token = jwt.sign(payload, secret);
-        // console.log(token);
-        res.json({ token });
-      }
-    } else {
-      res.json({ msg: "Please enter correct credential" });
-    }
+//     if (userLogin) {
+//       const isMatch = await bcrypt.compare(password, userLogin.password);
+//       // console.log(isMatch);
+//       // token = await userLogin.generateAuthToken();
+//       // console.log(token);
+//       if (!isMatch) {
+//         res.json({ msg: "Please enter correct credential " });
+//       } else {
+//         const payload = { email };
+//         const token = jwt.sign(payload, secret);
+//         // console.log(token);
+//         res.json({ token });
+//       }
+//     } else {
+//       res.json({ msg: "Please enter correct credential" });
+//     }
 
-    // await users.findOne({ name: name }).then((userexist) => {
-    //   res.json({ msg: "user found" });
-    // });
-  } catch (e) {
-    res.json({ msg: "error: " + e });
-  }
-};
-function verifyToken(req, res, next) {
-  const bearerHeader = req.headers["authorization"];
-  // console.log(bearerHeader);
+//     // await users.findOne({ name: name }).then((userexist) => {
+//     //   res.json({ msg: "user found" });
+//     // });
+//   } catch (e) {
+//     res.json({ msg: "error: " + e });
+//   }
+// };
+// function verifyToken(req, res, next) {
+//   const bearerHeader = req.headers["authorization"];
+//   // console.log(bearerHeader);
 
-  if (typeof bearerHeader !== undefined) {
-    const bearer = bearerHeader.split(" ");
-    console.log(bearer[1]);
-    req.token = bearer[1];
-    jwt.verify(req.token, secret, (err, authData) => {
-      if (err) {
-        res.json({ result: err });
-      } else {
-        next();
-      }
-    });
-  } else {
-    res.json({ msg: "token not provided" });
-  }
-}
+//   if (typeof bearerHeader !== undefined) {
+//     const bearer = bearerHeader.split(" ");
+//     console.log(bearer[1]);
+//     req.token = bearer[1];
+//     jwt.verify(req.token, secret, (err, authData) => {
+//       if (err) {
+//         res.json({ result: err });
+//       } else {
+//         next();
+//       }
+//     });
+//   } else {
+//     res.json({ msg: "token not provided" });
+//   }
+// }
 
 module.exports = {
   // createData,
@@ -277,9 +308,12 @@ module.exports = {
   userRemove,
   userUpdate,
   userAdd,
-  userLogin,
-  verifyToken,
+  // userLogin,
+  // verifyToken,
   picUpload,
   multiPicUpload,
   upload,
+  sessionTest,
+  login,
+  auth,
 };

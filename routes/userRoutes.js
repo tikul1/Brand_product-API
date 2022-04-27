@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const passport = require("passport");
 const userController = require("../controller/userController");
 
 router.get("/", userController.userList);
@@ -19,5 +20,7 @@ router.post(
   userController.upload.array("images", 2),
   userController.multiPicUpload
 );
+router.get("/test", userController.sessionTest);
+router.post("/", passport.authenticate("local"), userController.login);
 
 module.exports = router;
