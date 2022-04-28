@@ -5,7 +5,10 @@ const LocalStrategy = require("passport-local").Strategy;
 const session = require("express-session");
 const app = express();
 const auth = require("./controller/userController");
+const swaggerUI = require("swagger-ui-express");
+const swaggerJsDoc = require("swagger-jsdoc");
 const { initializingPassport } = require("./helpers/passportHelper");
+const { version } = require("moment");
 initializingPassport(passport);
 
 require("dotenv").config();
@@ -38,3 +41,23 @@ app.use("/login", require("./routes/userRoutes"));
 
 PORT = process.env.PORT || 8080;
 app.listen(PORT, () => console.log(`server running at : ${PORT}`));
+
+const options = {
+  definition: {
+    openapi: "3.0.0",
+    info: {
+      title: "User API",
+      version: "1.0.0",
+      description: "Simple User CRUD API",
+    },
+    server: [
+      {
+        url: "http://localhost:8080",
+      },
+    ],
+  },
+  apis: ["./controller/*.js"],
+};
+
+const specs = swaggerJsDoc(options);
+app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(specs));
