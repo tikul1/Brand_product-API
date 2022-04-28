@@ -5,6 +5,8 @@ const LocalStrategy = require("passport-local").Strategy;
 const session = require("express-session");
 const app = express();
 const auth = require("./controller/userController");
+const { initializingPassport } = require("./helpers/passportHelper");
+initializingPassport(passport);
 
 require("dotenv").config();
 

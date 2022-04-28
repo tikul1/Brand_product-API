@@ -14,35 +14,18 @@ const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 const secret = process.env.SECRET_KEY;
 const session = require("express-session");
+const { initializingPassport } = require("../helpers/passportHelper");
+
+initializingPassport();
 
 const login = (req, res) => {
-  res.send("hello");
+  res.json(req.user);
 };
 
-const auth = function (email, password, done) {
-  console.log(email, password);
-  users
-    .findOne({ email: email })
-    .then((user) => {
-      if (!user) {
-        return done(null, false, { msg: "the email is not registered" });
-      }
-      bcrypt.compare(password, users.password, (err, isMatch) => {
-        if (err) throw err;
-        if (isMatch) {
-          return done(null, user);
-        } else {
-          return done(null, false, { msg: "password incorrect" });
-        }
-      });
-    })
-    .catch((err) => console.log(err));
-};
-
-const sessionTest = (req, res) => {
-  req.session.test ? req.session.test++ : (req.session.test = 1);
-  res.send(req.session.test.toString());
-};
+// const sessionTest = (req, res) => {
+//   req.session.test ? req.session.test++ : (req.session.test = 1);
+//   res.send(req.session.test.toString());
+// };
 
 // async function mail() {
 //   const testing = await nodemailer.createTestAccount;
@@ -313,7 +296,7 @@ module.exports = {
   picUpload,
   multiPicUpload,
   upload,
-  sessionTest,
+  // sessionTest,
   login,
-  auth,
+  // auth,
 };
