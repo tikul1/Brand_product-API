@@ -1,0 +1,137 @@
+definition:
+  openapi: 3.0.0
+  info:
+    title: User API
+    version: 1.0.0
+    description: Simple User CRUD API
+  server:
+    url: http://localhost:8080
+  paths:
+    /users:
+      get:
+        summary: Returns the list of the User
+        tags:
+          - Users
+        responses:
+          200:
+            description: The list of the User
+            content:
+              application/json:
+                schema:
+                  type: array
+                  item:
+                  example: prakash
+    users/searchuser/{id}:
+      get:
+        summary: get the book by id
+        tags:
+          - Users
+        parameters:
+          - in: path
+            name: id
+            schema:
+              type: string
+
+            required: true
+            description: users
+
+        responses:
+          200:
+            description: user
+            content:
+              application/json:
+                schema:
+          404:
+            description: not found
+    users/adduser:
+      post:
+        summary: Create a new User
+        tags:
+          - Users
+        requestBody:
+          description: create user
+          required: true
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    example: tikul
+                  email:
+                    type: string
+                    example: abc@qwerty.com
+                  age:
+                    type: number
+                    example: 34
+                  password:
+                    type: string
+                    example: sdfsdf21fsdfsf2134
+                  confirmPassword:
+                    type: string
+                    example: 123456
+        responses:
+          200:
+            description: the user was successfully created
+          500:
+            description: Some error
+    users/update/user:
+      put:
+        summary: Update the user by id
+        tags:
+          - Users
+        parameters:
+          - in: path
+            name: id
+            schema:
+              type: string
+              required: true
+              description: users id
+        requestBody:
+          required: true
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    example: tikul
+                  email:
+                    type: string
+                    example: abc@qwerty.com
+                  age:
+                    type: number
+                    example: 34
+                  password:
+                    type: string
+                    example: sdfsdf21fsdfsf2134
+                  confirmPassword:
+                    type: string
+                    example: 123456
+        responses:
+          200:
+            description: the user is updated
+          404:
+            description: user not found
+          500:
+            description: some error
+    users/removeuser/{id}:
+      delete:
+        summary: remove the user by id
+        tags:
+          - Users
+        parameters:
+          - in: path
+            name: id
+            schema:
+              type: string
+              required: true
+              description: users id
+        responses:
+        200:
+          description: the user is removed
+        404:
+          description: user not found
+apis: ["./controller/*.js"]

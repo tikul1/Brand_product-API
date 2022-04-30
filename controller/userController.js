@@ -175,81 +175,6 @@ const multiPicUpload = async (req, res) => {
   }
 };
 
-/**
- *
- * @swagger
- * "components": {
- *   "schemas": {
- *      "user":  {
- *      "type": "object",
- *          "required": {
- *            "name",
- *            "email",
- *
- *            },
- *      "properties": {
- *            "id": {
- *            "type": "string",
- *            "description": "The auto-generated id of the user."
- *            },
- *            "name": {
- *              "type": "string",
- *              "description": "Name of the user"
- *            },
- *            "email": {
- *              "type": "string",
- *              "description": "Email of the user"
- *            },
- *
- *            "age": {
- *              "type": "number",
- *              "description": "Age of the user"
- *              },
- *
- *
- *
- *       },
- *   "example": {
- *              "name": "akash",
- *              "age" : 23,
- * }
- * }
- * }
- * }
- */
-/** 
-*@swagger
-*"tags": {
-*    "name": "Users",
-*    "description": "User managing API"  
-}   
-*/
-
-/**
- * @swagger
- *   "/users": {
- *    "get": {
- *      "summary": "Returns the list of the User",
- *      "tags": [Users],
- *      "responses": {
- *        "200": {
- *          "description": "The list of the User",
- *          "content": {
- *            "application/json": {
- *              "schema": {
- *                "type": "array",
- *                "item": {
- *                  "$ref": "#/components/schemas/user"
- *                }
- *              }
- *            }
- *          }
- *        }
- *      }
- *    }
- *  }
- */
-
 const userList = async (req, res) => {
   try {
     const list = await users.find();
@@ -259,43 +184,6 @@ const userList = async (req, res) => {
   }
 };
 
-/**
- * @swagger
- * "/users/searchuser/{id}": {
- *       "get": {
- *           "summary": "get the book by id",
- *           "tags": [
- *               "users"
- *           ],
- *           "parameters": [
- *               {
- *                   "name": "id",
- *                   "in": "path",
- *                   "schema": {
- *                       "type": "string"
- *                   },
- *                   "required": true,
- *                   "description": "users"
- *               }
- *           ],
- *           "responses": {
- *               "200": {
- *                   "description": "user",
- *                   "content": {
- *                       "application/json": {
- *                           "schema": {
- *                               "$ref": "#/components/schemas/user"
- *                           }
- *                       }
- *                   }
- *               },
- *               "404": {
- *                   "description": "not found"
- *               }
- *           }
- *       }
- *   }
- */
 const userById = async (req, res, next) => {
   try {
     const listById = await users.findById(req.params.id);
@@ -305,43 +193,6 @@ const userById = async (req, res, next) => {
   }
 };
 
-/**
- * @swagger
- * "/users/adduser" : {
- *        "post" : {
- *            "summary ": "Create a new User",
- *            "tags" : [
- *                "users"
- *            ],
- *            "requestBody" : {
- *                "description" : "create user",
- *                "required" :true,
- *                "content": {
- *                    "application/json" : {
- *                        "schema" : {
- *                            "$ref" : "#/components/schemas/user"
- *                        }
- *                    }
- *                }
- *            },
- *            "responses" : {
- *                "200" : {
- *                    "description" : "the user was successfully created",
- *                    "content" : {
- *                        "application/json" : {
- *                            "schema" : {
- *                                "$ref" : "#/components/schemas/user"
- *                            }
- *                        }
- *                    }
- *                },
- *                "500" : {
- *                    "description" : "Some error"
- *                }
- *            }
- *        }
- *    }
- */
 const userAdd = async (req, res) => {
   try {
     const newUser = await new users({
@@ -358,37 +209,6 @@ const userAdd = async (req, res) => {
     res.status(500).json("Error Occured");
   }
 };
-/**
- * @swagger
- * /users/updateuser/{id}:
- *  put:
- *     summary: Update the book by id
- *     tags: [users]
- *     parameters:
- *      - in: path
- *        name: id
- *        schema:
- *          type: string
- *        required: true
- *        description: users id
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             $ref: '#/components/schemas/user'
- *     responses:
- *      200:
- *        description: the user is updated
- *        content:
- *          application/json:
- *            schema:
- *              $ref: '#/components/schemas/user'
- *      404:
- *        description: user not found
- *      500:
- *        description: some error
- */
 const userUpdate = async (req, res) => {
   try {
     const userId = await users.findById(req.body.id);
