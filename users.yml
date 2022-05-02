@@ -21,7 +21,7 @@ definition:
                   type: array
                   item:
                   example: prakash
-    users/searchuser/{id}:
+    /users/searchuser/{id}:
       get:
         summary: get the book by id
         tags:
@@ -31,9 +31,8 @@ definition:
             name: id
             schema:
               type: string
-
-            required: true
-            description: users
+              required: true
+              description: users
 
         responses:
           200:
@@ -43,7 +42,7 @@ definition:
                 schema:
           404:
             description: not found
-    users/adduser:
+    /users/adduser:
       post:
         summary: Create a new User
         tags:
@@ -76,7 +75,7 @@ definition:
             description: the user was successfully created
           500:
             description: Some error
-    users/update/user:
+    /users/update/user:
       put:
         summary: Update the user by id
         tags:
@@ -117,7 +116,7 @@ definition:
             description: user not found
           500:
             description: some error
-    users/removeuser/{id}:
+    /users/removeuser/{id}:
       delete:
         summary: remove the user by id
         tags:
@@ -130,8 +129,8 @@ definition:
               required: true
               description: users id
         responses:
-        200:
-          description: the user is removed
-        404:
-          description: user not found
+          200:
+            description: the user is removed
+          404:
+            description: user not found
 apis: ["./controller/*.js"]
