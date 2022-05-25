@@ -1107,7 +1107,14 @@ const data = [
     nat: "GB",
   },
 ];
-//not working
+
+//get first and last element from data
+
+// let first = data.at(0);
+// let last = data.at(-1);
+// console.log(first, last);
+
+// not working for male
 // let data1 = data
 //   .filter((obj) => obj.gender.includes("female"))
 //   .map((obj) => ({
