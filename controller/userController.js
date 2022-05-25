@@ -19,7 +19,7 @@ const { initializingPassport } = require("../helpers/passportHelper");
 initializingPassport();
 
 const login = (req, res) => {
-  res.json(req.user);
+  res.json({ msg: "hey" });
 };
 
 // const sessionTest = (req, res) => {

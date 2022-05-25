@@ -25,6 +25,7 @@ app.use("/brands", require("./routes/brandRoutes"));
 app.use("/users", require("./routes/userRoutes"));
 app.use("/animals", require("./routes/queryPracRoutes"));
 app.use("/lodash", require("./routes/lodashRoutes"));
+app.use(("/a", require("./routes/dataRoutes")));
 
 app.use(
   session({
@@ -39,7 +40,7 @@ app.use(
 app.use(passport.initialize());
 app.use("/login", require("./routes/userRoutes"));
 
-PORT = process.env.PORT || 8080;
+PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`server running at : ${PORT}`));
 
 const options = YAML.load("users.yml");

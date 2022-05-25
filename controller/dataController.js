@@ -1,6 +1,3 @@
-// const { result } = require("lodash");
-const expess = require("express");
-const brands = require("../model/brandModel");
 const data = [
   {
     gender: "female",
@@ -1107,97 +1104,16 @@ const data = [
     nat: "GB",
   },
 ];
-//not working
-// let data1 = data
-//   .filter((obj) => obj.gender.includes("female"))
-//   .map((obj) => ({
-//     name: obj.name.title,
-//     gender: obj.gender,
-//     age: obj.dob.age,
-//   }));
-// console.log(data1);
 
-const dataList = async (req, res) => {
-  // find data by gender
-  // try {
-  //   let byGender = data.filter((obj) => {
-  //     if (obj.gender === "female") {
-  //       return obj;
-  //     }
-  //   });
-  //   res.json({ byGender });
-  // }
-  //map data for specific field
-  // try {
-  //   let mapData = data.map((obj) => ({
-  //     name: obj.name,
-  //     gender: obj.gender,
-  //     age: obj.dob.age,
-  //     email: obj.email,
-  //     picture: obj.picture,
-  //   }));
-  //   res.json({ mapData });
-  // } catch (e) {
-  //   res.json({ msg: "an error " + e });
-  // }
-  // filter data by age ascending order.
-  //   try {
-  //     data.sort((a, b) => {
-  //       return a.dob.age - b.dob.age;
-  //     });
-  //     let mapData = data.map((obj) => ({
-  //       name: obj.name,
-  //       gender: obj.gender,
-  //       age: obj.dob.age,
-  //       email: obj.email,
-  //     }));
-  //     res.json({ mapData });
-  //   } catch (e) {
-  //     res.json({ msg: "an error " + e });
-  //   }
-};
-
-const brandList = async (req, res) => {
+const findByGender = (req, res) => {
   try {
-    await brands.find({}).then((response) => {
-      res.json({ response });
-    });
-  } catch (err) {
-    res.json({ msg: "an error occured" });
+    // let data1 = data.find({});
+    // res.json({ msg: "hello" });
+    res.send("hey");
+    // console.log(data1);
+  } catch (e) {
+    res.json({ msg: "An error" + e });
   }
 };
 
-const brandAdd = async (req, res) => {
-  try {
-    newBrand = await new brands({
-      brandName: req.body.brandName,
-      brandType: req.body.brandType,
-    });
-    await newBrand.save();
-    res.json(newBrand);
-  } catch (error) {
-    res.json("Error Occured");
-  }
-};
-
-const brandUpdate = async (req, res) => {
-  try {
-    const brandname = await brands.findById(req.body.id);
-    Object.assign(brandname, req.body);
-    await brandname.save();
-    res.json({ msg: `Product updated sucessfully.` });
-  } catch (err) {
-    res.json({ msg: "An error occured" + err });
-  }
-};
-const brandRemove = async (req, res) => {
-  try {
-    let brandId = req.params.id;
-    await brands.findByIdAndRemove(brandId);
-    res.json({ msg: "brand removed" });
-  } catch (err) {
-    res.json({ msg: "an error occured" + err });
-  }
-};
-
-module.exports = { brandList, brandAdd, brandRemove, brandUpdate, dataList };
+module.exports = { findByGender };
