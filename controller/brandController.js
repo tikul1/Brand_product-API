@@ -1238,6 +1238,20 @@ const dataList = async (req, res) => {
   //   } catch (e) {
   //     res.json({ msg: "an error " + e });
   //   }
+  //filter data by age
+  // try {
+  //   let mapData = data
+  //     .filter((obj) => obj.dob.age < 30)
+  //     .map((obj) => ({
+  //       name: obj.name,
+  //       gender: obj.gender,
+  //       age: obj.dob.age,
+  //       email: obj.email,
+  //     }));
+  //   res.json({ mapData });
+  // } catch (e) {
+  //   res.json({ msg: "an error " + e });
+  // }
 };
 
 const brandList = async (req, res) => {
