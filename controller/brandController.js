@@ -1223,6 +1223,21 @@ const dataList = async (req, res) => {
   //   } catch (e) {
   //     res.json({ msg: "an error " + e });
   //   }
+  //filter data by name ascending
+  //   try {
+  //     data.sort((a, b) => {
+  //       return a.name.first.localeCompare(b.name.first);
+  //     });
+  //     let mapData = data.map((obj) => ({
+  //       name: obj.name,
+  //       gender: obj.gender,
+  //       age: obj.dob.age,
+  //       email: obj.email,
+  //     }));
+  //     res.json({ mapData });
+  //   } catch (e) {
+  //     res.json({ msg: "an error " + e });
+  //   }
 };
 
 const brandList = async (req, res) => {
