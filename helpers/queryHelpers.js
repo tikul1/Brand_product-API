@@ -3,15 +3,22 @@
 const { isArray } = require("lodash");
 const { data, newUser } = require("./dataForQuery");
 
+//unshift to add object in a an array. it will add first in an array.
+
+data.unshift(newUser);
+console.log(data);
+
 //using spread operator
 
-const newData = [...newUser, ...data];
-console.log(newData);
+// const newData = [newUser, ...data];
+// console.log(newData);
 
-//push and concat
+//push method
 
 // newUser.push(...data);
 // console.log(newUser);
+
+// concat method
 
 // let arr1 = newUser;
 // let arr2 = data;
