@@ -1,5 +1,6 @@
 // const { result } = require("lodash");
 const expess = require("express");
+const { indexOf } = require("lodash");
 const brands = require("../model/brandModel");
 const data = [
   {
@@ -1149,6 +1150,12 @@ let newUser = {
 //     return obj;
 //   }
 // });
+// const indexOfData = data.filter((obj) => {
+//   if (obj.name.first === "Indie") {
+//     return indexOf(obj);
+//   }
+// });
+// console.log(indexOfData);
 // console.log(filteredUser);
 
 // function updateUserData(data, newUser) {
@@ -1165,7 +1172,7 @@ let newUser = {
 // updateUserData(data, newUser);
 
 //add data at index
-// const addData = data.splice(1, 0, newUser);
+// const addData = data.splice(5, 0, newUser);
 // console.log(data);
 
 //get first and last element from data
@@ -1195,6 +1202,7 @@ const dataList = async (req, res) => {
   // } catch (e) {
   //   res.json({ msg: "an error " + e });
   // }
+
   //map data for specific field
   // try {
   //   let mapData = data.map((obj) => ({
@@ -1208,50 +1216,52 @@ const dataList = async (req, res) => {
   // } catch (e) {
   //   res.json({ msg: "an error " + e });
   // }
-  // filter data by age ascending order.
-  //   try {
-  //     data.sort((a, b) => {
-  //       return a.dob.age - b.dob.age;
-  //     });
-  //     let mapData = data.map((obj) => ({
-  //       name: obj.name,
-  //       gender: obj.gender,
-  //       age: obj.dob.age,
-  //       email: obj.email,
-  //     }));
-  //     res.json({ mapData });
-  //   } catch (e) {
-  //     res.json({ msg: "an error " + e });
-  //   }
-  //filter data by name ascending
-  //   try {
-  //     data.sort((a, b) => {
-  //       return a.name.first.localeCompare(b.name.first);
-  //     });
-  //     let mapData = data.map((obj) => ({
-  //       name: obj.name,
-  //       gender: obj.gender,
-  //       age: obj.dob.age,
-  //       email: obj.email,
-  //     }));
-  //     res.json({ mapData });
-  //   } catch (e) {
-  //     res.json({ msg: "an error " + e });
-  //   }
-  //filter data by age
+
+  // filter data by age ascending order.    // grouping//
   // try {
-  //   let mapData = data
-  //     .filter((obj) => obj.dob.age < 30)
-  //     .map((obj) => ({
-  //       name: obj.name,
-  //       gender: obj.gender,
-  //       age: obj.dob.age,
-  //       email: obj.email,
-  //     }));
+  //   data.sort((a, b) => {
+  //     return a.dob.age - b.dob.age;
+  //   });
+  //   let mapData = data.map((obj) => ({
+  //     name: obj.name,
+  //     gender: obj.gender,
+  //     age: obj.dob.age,
+  //     email: obj.email,
+  //   }));
   //   res.json({ mapData });
   // } catch (e) {
   //   res.json({ msg: "an error " + e });
   // }
+  
+  //filter data by name ascending
+  // try {
+  //   data.sort((a, b) => {
+  //     return a.name.first.localeCompare(b.name.first);
+  //   });
+  //   let mapData = data.map((obj) => ({
+  //     name: obj.name,
+  //     gender: obj.gender,
+  //     age: obj.dob.age,
+  //     email: obj.email,
+  //   }));
+  //   res.json({ mapData });
+  // } catch (e) {
+  //   res.json({ msg: "an error " + e });
+  // }
+  //filter data by age
+  try {
+    let mapData = data
+      .filter((obj) => obj.dob.age < 20)
+      .map((obj) => ({
+        name: obj.name,
+        gender: obj.gender,
+        age: obj.dob.age,
+        email: obj.email,
+      }));
+    res.json({ mapData });
+  } catch (e) {
+    res.json({ msg: "an error " + e });
+  }
 };
 
 const brandList = async (req, res) => {
