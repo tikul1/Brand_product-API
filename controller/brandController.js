@@ -1143,6 +1143,29 @@ let newUser = {
   nat: "NZ",
 };
 
+//add element at any index
+
+// function addElement() {
+//   let arr = data;
+//   let index = 1;
+//   let element = newUser;
+//   for (i = arr.length; i > index; i--) {
+//     arr[i] = arr[i - 1];
+//   }
+//   arr[index] = element;
+// }
+// addElement();
+// console.log(data);
+
+// function firstAndLast() {
+//   let arr = data;
+//   let first = arr[0];
+//   let last = arr[arr.length - 1];
+//   console.log(first);
+//   console.log(last);
+// }
+// firstAndLast();
+
 //filtering data by name
 
 // const filteredUser = data.filter((obj) => {
@@ -1232,7 +1255,7 @@ const dataList = async (req, res) => {
   // } catch (e) {
   //   res.json({ msg: "an error " + e });
   // }
-  
+
   //filter data by name ascending
   // try {
   //   data.sort((a, b) => {
@@ -1251,7 +1274,7 @@ const dataList = async (req, res) => {
   //filter data by age
   try {
     let mapData = data
-      .filter((obj) => obj.dob.age < 20)
+      .filter((obj) => obj.dob.age > 70)
       .map((obj) => ({
         name: obj.name,
         gender: obj.gender,
