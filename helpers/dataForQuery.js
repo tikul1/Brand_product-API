@@ -1104,39 +1104,41 @@ const data = [
     nat: "GB",
   },
 ];
-let newUser = {
-  gender: "male",
-  name: { title: "Mr", first: "Hardik", last: "Parmar" },
-  location: {
-    street: { number: 1907, name: "Otipua Road" },
-    city: "Auckland",
-    state: "Wellington",
-    country: "New Zealand",
-    postcode: 15394,
-    coordinates: { latitude: "68.2335", longitude: "108.1904" },
-    timezone: { offset: "+6:00", description: "Almaty, Dhaka, Colombo" },
+let newUser = [
+  {
+    gender: "male",
+    name: { title: "Mr", first: "Hardik", last: "Parmar" },
+    location: {
+      street: { number: 1907, name: "Otipua Road" },
+      city: "Auckland",
+      state: "Wellington",
+      country: "New Zealand",
+      postcode: 15394,
+      coordinates: { latitude: "68.2335", longitude: "108.1904" },
+      timezone: { offset: "+6:00", description: "Almaty, Dhaka, Colombo" },
+    },
+    email: "indie.williams@example.com",
+    login: {
+      uuid: "6efc390e-0bb4-4de1-a74d-09de36196787",
+      username: "ticklishbird625",
+      password: "daddy",
+      salt: "RRtZ4eAE",
+      md5: "022b4ae2ea15d07f47f6769201dd4d98",
+      sha1: "ea8231dfc67ccc7843bb002897e5bb785565bd4a",
+      sha256:
+        "68954a73a9b276c627728b086ad82f988553468c3ad79dd895c567959b096949",
+    },
+    dob: { date: "1989-02-09T17:12:50.414Z", age: 33 },
+    registered: { date: "2018-08-14T07:20:41.918Z", age: 4 },
+    phone: "(316)-445-4036",
+    cell: "(954)-135-3226",
+    id: { name: "", value: null },
+    picture: {
+      large: "https://randomuser.me/api/portraits/women/21.jpg",
+      medium: "https://randomuser.me/api/portraits/med/women/21.jpg",
+      thumbnail: "https://randomuser.me/api/portraits/thumb/women/21.jpg",
+    },
+    nat: "NZ",
   },
-  email: "indie.williams@example.com",
-  login: {
-    uuid: "6efc390e-0bb4-4de1-a74d-09de36196787",
-    username: "ticklishbird625",
-    password: "daddy",
-    salt: "RRtZ4eAE",
-    md5: "022b4ae2ea15d07f47f6769201dd4d98",
-    sha1: "ea8231dfc67ccc7843bb002897e5bb785565bd4a",
-    sha256: "68954a73a9b276c627728b086ad82f988553468c3ad79dd895c567959b096949",
-  },
-  dob: { date: "1989-02-09T17:12:50.414Z", age: 33 },
-  registered: { date: "2018-08-14T07:20:41.918Z", age: 4 },
-  phone: "(316)-445-4036",
-  cell: "(954)-135-3226",
-  id: { name: "", value: null },
-  picture: {
-    large: "https://randomuser.me/api/portraits/women/21.jpg",
-    medium: "https://randomuser.me/api/portraits/med/women/21.jpg",
-    thumbnail: "https://randomuser.me/api/portraits/thumb/women/21.jpg",
-  },
-  nat: "NZ",
-};
-
+];
 module.exports = { data, newUser };

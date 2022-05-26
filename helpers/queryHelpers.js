@@ -1,6 +1,23 @@
 //add element at any index
 
+const { isArray } = require("lodash");
 const { data, newUser } = require("./dataForQuery");
+
+//using spread operator
+
+const newData = [...newUser, ...data];
+console.log(newData);
+
+//push and concat
+
+// newUser.push(...data);
+// console.log(newUser);
+
+// let arr1 = newUser;
+// let arr2 = data;
+// let arr3 = arr1.concat(arr2);
+// console.log(arr3);
+
 function addElement() {
   let arr = data;
   let index = 1;
