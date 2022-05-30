@@ -5,8 +5,8 @@ const { data, newUser } = require("./dataForQuery");
 
 //unshift to add object in a an array. it will add first in an array.
 
-data.unshift(newUser);
-console.log(data);
+// data.unshift(newUser);
+// console.log(data);
 
 //using spread operator
 

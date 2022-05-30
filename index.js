@@ -8,10 +8,30 @@ const auth = require("./controller/userController");
 const swaggerUI = require("swagger-ui-express");
 const swaggerJsDoc = require("swagger-jsdoc");
 const { initializingPassport } = require("./helpers/passportHelper");
+const cron = require("node-cron");
 const { version } = require("moment");
 initializingPassport(passport);
 YAML = require("yamljs");
 require("dotenv").config();
+
+//cron working every minute
+
+// cron.schedule("* * * * *", () => {
+//   console.log("Cron Running");
+// });
+
+//cron running every second
+// cron.schedule("* * * * * *", () => {
+//   console.log("Cron Running second");
+// });
+
+// cron.schedule("*/2 * * * * *", () => {
+//   console.log("Cron Running 2 second");
+// });
+
+cron.schedule(" 12 14 * * *", () => {
+  console.log("Cron Running at 02: 12 PM ");
+});
 
 app.use(express.json());
 app.use(
