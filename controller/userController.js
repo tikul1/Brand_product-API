@@ -177,7 +177,10 @@ const multiPicUpload = async (req, res) => {
 
 const userList = async (req, res) => {
   try {
-    const list = await users.find();
+    const limit = req.query.limit || 10;
+    const skip = req.query.skip || 0;
+
+    const list = await users.find().limit(limit).skip(skip);
     res.json({ list });
   } catch (error) {
     res.json({ msg: "An Error occured" + error });
