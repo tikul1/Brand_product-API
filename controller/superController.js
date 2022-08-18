@@ -1,20 +1,26 @@
-const products = require("../model/productModel");
-const _ = require("lodash");
+// const products = require("../model/productModel");
+// const _ = require("lodash");
 //to show product list
+const fetch = require("node-fetch");
 
-const productList = async (req, res) => {
+const superList = async (req, res) => {
   try {
-    const list = await products.find().populate("brandId", "_id brandName brandType");
-    res.status(200).json(list);
+    const res1 = await fetch(
+      "https://v2.jokeapi.dev/joke/Programming?type=single"
+    );
+    console.log(res1);
+    res.json(res1);
   } catch (error) {
-    res.json({ msg: "An Error occured" + error });
+    res.json({ msg: "An Error occured" });
   }
 };
 
 //to show single products using id by get method
-const ProductById = async (req, res, next) => {
+const superById = async (req, res, next) => {
   try {
-    const listById = await products.findById(req.params.id).populate("brandId", "_id brandName brandType ");
+    const listById = await products
+      .findById(req.params.id)
+      .populate("brandId", "_id brandName brandType ");
     res.json(listById);
   } catch (error) {
     res.json({ msg: "An Error occured: " + error });
@@ -23,7 +29,7 @@ const ProductById = async (req, res, next) => {
 
 //to add product details
 
-const productAdd = async (req, res) => {
+const superAdd = async (req, res) => {
   try {
     const newProduct = await new products({
       productName: req.body.productName,
@@ -42,7 +48,7 @@ const productAdd = async (req, res) => {
 
 //to update product details
 
-const productUpdate = async (req, res) => {
+const superUpdate = async (req, res) => {
   try {
     const productId = await products.findById(req.body.id);
     Object.assign(productId, req.body);
@@ -53,7 +59,7 @@ const productUpdate = async (req, res) => {
   }
 };
 
-const productRemove = async (req, res) => {
+const superRemove = async (req, res) => {
   try {
     let productId = req.params.id;
     await products.findByIdAndRemove(productId).then((product) => {
@@ -64,9 +70,10 @@ const productRemove = async (req, res) => {
   }
 };
 
-const productSearch = async (req, res) => {
+const superSearch = async (req, res) => {
   try {
-    const { productName, productCatagory, productSold, productQuantity } = req.query;
+    const { productName, productCatagory, productSold, productQuantity } =
+      req.query;
     console.log(req.query);
     await products.find(req.query).then((response) => {
       res.json({ response });
@@ -93,48 +100,6 @@ const productSearch = async (req, res) => {
 //   }
 // };
 
-// const ProductById = async (req, res, next) => {
-//   try {
-//     let listById = await products.findById(req.params.id);
-
-//     for (const key of Object.entries(listById.toJSON())) {
-//       console.log(`${key[0]} => ${key[1]}`);
-
-//       // res.json(listById);
-//     }
-//   } catch (error) {
-//     res.json({ msg: "An Error occured: " + error });
-//   }
-// };
-
-// const user = {
-//   name: "hardik",
-//   age: "28",
-//   address: "ahmedabad",
-//   occupation: "web developer",
-// };
-// console.log(Object.keys(user));
-// console.log(Object.values(user));
-// console.log(Object.entries(user));
-
-// for (const key of Object.keys(user)) {
-//   console.log(`${key} => ${user[key]}`);
-// }
-
-// for (const entry of Object.entries(user)) {
-//   console.log(`${entry[0]} => ${entry[1]}`);
-// }
-
-// products.find(() => {
-//   console.log(Object.keys(products));
-// });
-// console.log(Object.entries(products));
-
 module.exports = {
-  productList,
-  ProductById,
-  productRemove,
-  productUpdate,
-  productAdd,
-  productSearch,
+  superList,
 };

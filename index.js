@@ -45,6 +45,8 @@ app.use("/brands", require("./routes/brandRoutes"));
 app.use("/users", require("./routes/userRoutes"));
 app.use("/animals", require("./routes/queryPracRoutes"));
 app.use("/lodash", require("./routes/lodashRoutes"));
+app.use("/super", require("./routes/superRoutes"));
+
 app.use(("/a", require("./routes/dataRoutes")));
 
 app.use(

@@ -15,6 +15,7 @@ const LocalStrategy = require("passport-local").Strategy;
 const secret = process.env.SECRET_KEY;
 const session = require("express-session");
 const { initializingPassport } = require("../helpers/passportHelper");
+const exceljs = require("exceljs");
 
 initializingPassport();
 
@@ -181,14 +182,30 @@ const userList = async (req, res) => {
     // const skip = req.query.skip || 0;
     // const list = await users.find().limit(limit).skip(skip);
 
-    let page = req.body.page ?? 1;
-    let limit = 10;
+    // let page = req.body.page ?? 1;
+    // let limit = 10;
 
-    const list = await users
-      .find()
-      .skip(page * limit - limit)
-      .limit(limit);
+    // const list = await users
+    //   .find()
+    //   .skip(page * limit - limit)
+    //   .limit(limit);
 
+    // res.json({ list });
+
+    // using
+    let skip = 3;
+    let limit = 5;
+    const list = await users.aggregate([
+      {
+        $project: { _id: 0 },
+      },
+      {
+        $skip: skip,
+      },
+      {
+        $limit: limit,
+      },
+    ]);
     res.json({ list });
   } catch (error) {
     res.json({ msg: "An Error occured" + error });
