@@ -7,7 +7,7 @@ const chai = require("chai");
 // const should = require("chai").should();
 const chaiHttp = require("chai-http");
 const { expect } = require("chai");
-// const server = require("../index");
+const app = require("../index");
 // let should = chai.should();
 
 chai.use(chaiHttp);
@@ -25,12 +25,14 @@ describe("productController", () => {
   describe("Route GET /products/a", () => {
     it("it should get all the products", (done) => {
       chai
-        .request("http://localhost:8080")
+        .request(app)
         .get("/products/a")
-        .send((err, res) => {
-          expect(res).to.have.status(201);
-          expect(res).to.have.an("string");
-          expect(res).body.length.to.have.eql(0);
+        .end((err, res) => {
+          //   const { body } = res;
+          expect(res).to.have.status(200);
+          //   expect(200);
+          expect(res).to.be.a("object");
+          //   expect(res).body.length.to.have.eql(0);
         });
       done();
     });
