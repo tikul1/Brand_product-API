@@ -13,13 +13,13 @@ const app = require("../index");
 chai.use(chaiHttp);
 
 //it will remove empty products
-// describe("products", () => {
-//   beforeEach((done) => {
-//     products.remove({}, (err) => {
-//       done();
-//     });
-//   });
-// });
+describe("products", () => {
+  beforeEach((done) => {
+    products.remove({}, (err) => {
+      done();
+    });
+  });
+});
 //get route
 describe("productController", () => {
   describe("Route GET /products/a", () => {
@@ -28,13 +28,36 @@ describe("productController", () => {
         .request(app)
         .get("/products/a")
         .end((err, res) => {
-          //   const { body } = res;
           expect(res).to.have.status(200);
-          //   expect(200);
           expect(res).to.be.a("object");
-          //   expect(res).body.length.to.have.eql(0);
+          //   expect(res.body).length.to.have.equal(0);
         });
       done();
     });
+  });
+});
+
+// post route
+describe("/POST products", () => {
+  it("it should post the product", (done) => {
+    let product = {
+      productName: "Laptop",
+      productCatagory: "Electronics",
+      productPrice: 45000,
+      productQuantity: 219,
+    };
+    chai
+      .request(app)
+      .post("/products/add")
+      .send(product)
+      .end((err, res) => {
+        expect(res).to.have.status(200);
+        expect(res.body).to.be.a("object");
+        expect(res.body).to.have.property("productName");
+        expect(res.body).to.have.property("productCatagory");
+        expect(res.body).to.have.property("productPrice");
+        expect(res.body).to.have.property("productQuantity");
+        done();
+      });
   });
 });
