@@ -4,11 +4,9 @@ const request = require("supertest");
 
 //require dependencies
 const chai = require("chai");
-// const should = require("chai").should();
 const chaiHttp = require("chai-http");
 const { expect } = require("chai");
 const app = require("../index");
-// let should = chai.should();
 
 chai.use(chaiHttp);
 
@@ -30,7 +28,6 @@ describe("productController", () => {
         .end((err, res) => {
           expect(res).to.have.status(200);
           expect(res).to.be.a("object");
-          //   expect(res.body).length.to.have.equal(0);
         });
       done();
     });
@@ -39,6 +36,24 @@ describe("productController", () => {
 
 // post route
 describe("/POST products", () => {
+  it("it should not POST a book without pages field", (done) => {
+    let product = {
+      productName: "Laptop",
+      productCatagory: "Electronics",
+      productPrice: 45000,
+      productQuantity: 219,
+    };
+    chai
+      .request(app)
+      .post("/products/add")
+      .send(product)
+      .end((err, res) => {
+        expect(res).to.have.status(200);
+        expect(res.body).to.be.a("object");
+        expect(res.body).to.have.property("productQuantity");
+        done();
+      });
+  });
   it("it should post the product", (done) => {
     let product = {
       productName: "Laptop",
@@ -49,6 +64,26 @@ describe("/POST products", () => {
     chai
       .request(app)
       .post("/products/add")
+      .send(product)
+      .end((err, res) => {
+        expect(res).to.have.status(200);
+        expect(product).to.be.a("object");
+        expect(product).to.have.property("productName");
+        expect(product).to.have.property("productCatagory");
+        expect(product).to.have.property("productPrice");
+        expect(product).to.have.property("productQuantity");
+        done();
+      });
+  });
+});
+
+// product by id test
+
+describe("/POST products", () => {
+  it("it should get the product by id", (done) => {
+    let ProductId = chai
+      .request(app)
+      .post("/search/:id")
       .send(product)
       .end((err, res) => {
         expect(res).to.have.status(200);

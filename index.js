@@ -4,13 +4,10 @@ const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 const session = require("express-session");
 const app = express();
-const auth = require("./controller/userController");
 const swaggerUI = require("swagger-ui-express");
 const swaggerJsDoc = require("swagger-jsdoc");
 const { initializingPassport } = require("./helpers/passportHelper");
 const cron = require("node-cron");
-const { version } = require("moment");
-const { nodeModuleNameResolver } = require("typescript");
 initializingPassport(passport);
 YAML = require("yamljs");
 require("dotenv").config();
@@ -59,11 +56,28 @@ app.use(
   }),
   require("./routes/userRoutes")
 );
-
+const start = new Date.now();
+function doRequest() {
+  // making a http request
+  console.log(`HTTP: ${Date.now() - start}ms`);
+}
+function doHash() {
+  crypto.pbkdf2(...args, () => {
+    console.log(`Hash: ${Date.now() - start}ms`);
+  });
+}
+doRequest();
+fs.readFile("fileName", "format", () => {
+  console.log(`FS: ${Date.now() - start}ms`);
+});
+doHash();
+doHash();
+doHash();
+doHash();
 app.use(passport.initialize());
 app.use("/login", require("./routes/userRoutes"));
 
-PORT = process.env.PORT || 5000;
+PORT = process.env.PORT;
 app.listen(PORT, () => console.log(`server running at : ${PORT}`));
 
 const options = YAML.load("users.yml");

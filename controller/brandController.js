@@ -1,129 +1,49 @@
-// const { result } = require("lodash");
-const expess = require("express");
-const { indexOf } = require("lodash");
-const brands = require("../model/brandModel");
-const {
-  updateUserData,
-  firstAndLast,
-  addElement,
-} = require("../helpers/queryHelpers");
-const { data, newUser } = require("../helpers/dataForQuery");
+// // const teachers = require("../models/teacherModel");
+// // const { registerSchema } = require("../helpers/auth");
+// // const { initializingPassport } = require("../helpers/teacherPassport");
+// // const teacherMessage = require("../helpers/apiError");
+// // const { successResponse, alertResponse, errorResponse } = require("../helpers/responseErrHelper");
 
-const dataList = async (req, res) => {
-  // find data by gender
-  // try {
-  //   let byGender = data.filter((obj) => {
-  //     if (obj.gender === "female") {
-  //       return obj;
-  //     }
-  //   });
-  //   res.json({ byGender });
-  // } catch (e) {
-  //   res.json({ msg: "an error " + e });
-  // }
+// const login = async (req, res) => {
+//   try {
+//     res.status(200).json(successResponse(200, "Success", teacherMessage.teacher.teacherLogin, req.user));
+//   } catch (e) {
+//     res.status(400).json(errorResponse(400, "Error", teacherMessage["teacher"].teacherNotFound));
+//   }
+// };
 
-  //map data for specific field
-  // try {
-  //   let mapData = data.map((obj) => ({
-  //     name: obj.name,
-  //     gender: obj.gender,
-  //     age: obj.dob.age,
-  //     email: obj.email,
-  //     picture: obj.picture,
-  //   }));
-  //   res.json({ mapData });
-  // } catch (e) {
-  //   res.json({ msg: "an error " + e });
-  // }
+// // get all teacher information
+// const teacherList = async (req, res) => {
+//   try {
+//     const list = await teachers.find().populate("admin_id", "_id firstname lastname");
+//     res.status(200).json(successResponse(200, "success", teacherMessage.teacher.teacherList, list));
+//   } catch (e) {
+//     res.status(400).json(errorResponse(400, "error", teacherMessage["teacher"].teacherNotFound));
+//   }
+// };
 
-  // filter data by age ascending order.    // grouping//
-  // try {
-  //   data.sort((a, b) => {
-  //     return a.dob.age - b.dob.age;
-  //   });
-  //   let mapData = data.map((obj) => ({
-  //     name: obj.name,
-  //     gender: obj.gender,
-  //     age: obj.dob.age,
-  //     email: obj.email,
-  //   }));
-  //   res.json({ mapData });
-  // } catch (e) {
-  //   res.json({ msg: "an error " + e });
-  // }
+// // adding teacher infomation
 
-  //filter data by name ascending
-  // try {
-  //   data.sort((a, b) => {
-  //     return a.name.first.localeCompare(b.name.first);
-  //   });
-  //   let mapData = data.map((obj) => ({
-  //     name: obj.name,
-  //     gender: obj.gender,
-  //     age: obj.dob.age,
-  //     email: obj.email,
-  //   }));
-  //   res.json({ mapData });
-  // } catch (e) {
-  //   res.json({ msg: "an error " + e });
-  // }
-  //filter data by age
-  try {
-    let mapData = data
-      .filter((obj) => obj.dob.age > 70)
-      .map((obj) => ({
-        name: obj.name,
-        gender: obj.gender,
-        age: obj.dob.age,
-        email: obj.email,
-      }));
-    res.json({ mapData });
-  } catch (e) {
-    res.json({ msg: "an error " + e });
-  }
-};
-
-const brandList = async (req, res) => {
-  try {
-    await brands.find({}).then((response) => {
-      res.json({ response });
-    });
-  } catch (err) {
-    res.json({ msg: "an error occured" });
-  }
-};
-
-const brandAdd = async (req, res) => {
-  try {
-    newBrand = await new brands({
-      brandName: req.body.brandName,
-      brandType: req.body.brandType,
-    });
-    await newBrand.save();
-    res.json(newBrand);
-  } catch (error) {
-    res.json("Error Occured");
-  }
-};
-
-const brandUpdate = async (req, res) => {
-  try {
-    const brandname = await brands.findById(req.body.id);
-    Object.assign(brandname, req.body);
-    await brandname.save();
-    res.json({ msg: `Product updated sucessfully.` });
-  } catch (err) {
-    res.json({ msg: "An error occured" + err });
-  }
-};
-const brandRemove = async (req, res) => {
-  try {
-    let brandId = req.params.id;
-    await brands.findByIdAndRemove(brandId);
-    res.json({ msg: "brand removed" });
-  } catch (err) {
-    res.json({ msg: "an error occured" + err });
-  }
-};
-
-module.exports = { brandList, brandAdd, brandRemove, brandUpdate, dataList };
+// const teacherAdd = async (req, res) => {
+//   try {
+//     const { firstname, lastname, email, password, confirmpassword, admin_id } = req.body;
+//     const result = await registerSchema.validateAsync(req.body);
+//     const teacherExist = await teachers.findOne({ email: result.email });
+//     if (teacherExist) {
+//       res.status(401).json(alertResponse(401, "Error", teacherMessage["teacher"].teacherExistError));
+//     } else {
+//       const teacher = await new teachers({
+//         firstname,
+//         lastname,
+//         email,
+//         password,
+//         confirmpassword,
+//         admin_id,
+//       });
+//       await teacher.save();
+//       res.status(200).json(successResponse(200, "Success", teacherMessage["teacher"].teacherSuccess, teacher));
+//     }
+//   } catch (error) {
+//     res.status(400).json(errorResponse(400, "Error", teacherMessage["teacher"].teacherAddError));
+//   }
+// };
